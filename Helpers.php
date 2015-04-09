@@ -25,9 +25,9 @@ function surround_in_quotes(&$arr)
 	array_walk($arr, create_function('&$str', '$str = "\'$str\'";'));
 }
 
-//NOT FINISHED - NEED FOR EACH TABLE
+
 function append_required_fields(&$arr,$tablename)
-{ //change
+{ 
 	if($tablename == 'admin')
 	{
 		if(!array_key_exists('username',$arr))
@@ -81,9 +81,11 @@ function append_required_fields(&$arr,$tablename)
 		if(!array_key_exists('barcode',$arr))
 			$arr['barcode'] = 'NULL';
 		if(!array_key_exists('mediaitem_id',$arr))
-			$arr['mediaiem_id'] = 'NULL';
-		if(!array_key_exists('copy_number',$arr))
-			$arr['copy_number'] = 'NULL';
+			$arr['mediaitem_id'] = 'NULL';
+		if(!array_key_exists('copy_no',$arr))
+			$arr['copy_no'] = 'NULL';
+		if(!array_key_exists('renew_limit',$arr))
+			$arr['renew_limit'] = 'NULL';
 	}
 	if($tablename == 'hold')
 	{
@@ -91,8 +93,8 @@ function append_required_fields(&$arr,$tablename)
 			$arr['patron_id'] = 'NULL';
 		if(!array_key_exists('mediaitem_id)',$arr))
 			$arr['mediaitem_id'] = 'NULL';
-		if(!array_key_exists('queue_position',$arr))
-			$arr['queue_position'] = 'NULL';
+		if(!array_key_exists('time_placed',$arr))
+			$arr['time_placed'] = 'NULL';
 		if(!array_key_exists('expiration_date',$arr))
 			$arr['expiration_date'] = 'NULL';
 	}
@@ -107,34 +109,34 @@ function append_required_fields(&$arr,$tablename)
 	{
 		if(!array_key_exists('username',$arr))
 			$arr['username'] = 'NULL';
-		if(!array_key_exists('password_hash',$arr))
+		if(!array_key_exists('password',$arr))
 			$arr['password'] = 'NULL';
 		if(!array_key_exists('salt',$arr))
 			$arr['salt'] = 'NULL';
 		if(!array_key_exists('check_in',$arr))
-			$arr['username'] = 'NULL';
+			$arr['check_in'] = 'NULL';
 		if(!array_key_exists('check_out',$arr))
-			$arr['password'] = 'NULL';
+			$arr['check_out'] = 'NULL';
 		if(!array_key_exists('add_book',$arr))
-			$arr['salt'] = 'NULL';
+			$arr['add_book'] = 'NULL';
 		if(!array_key_exists('remove_book',$arr))
-			$arr['username'] = 'NULL';
+			$arr['remove_book'] = 'NULL';
 		if(!array_key_exists('add_patron',$arr))
-			$arr['password'] = 'NULL';
+			$arr['add_patron'] = 'NULL';
 		if(!array_key_exists('remove_patron',$arr))
-			$arr['salt'] = 'NULL';
+			$arr['remove_patron'] = 'NULL';
 		if(!array_key_exists('manage_account',$arr))
-			$arr['username'] = 'NULL';
+			$arr['manage_account'] = 'NULL';
 		if(!array_key_exists('pay_fines',$arr))
-			$arr['password'] = 'NULL';
+			$arr['pay_fines'] = 'NULL';
 		if(!array_key_exists('extend_due_date',$arr))
-			$arr['salt'] = 'NULL';
+			$arr['extend_due_date'] = 'NULL';
 		if(!array_key_exists('waive_fines',$arr))
-			$arr['username'] = 'NULL';
+			$arr['waive_fines'] = 'NULL';
 		if(!array_key_exists('edit_media_entry',$arr))
-			$arr['password'] = 'NULL';
+			$arr['edit_media_entry'] = 'NULL';
 		if(!array_key_exists('add_tag',$arr))
-			$arr['salt'] = 'NULL';
+			$arr['add_tag'] = 'NULL';
 	}
 	if($tablename == 'mediaitem')
 	{
@@ -151,24 +153,25 @@ function append_required_fields(&$arr,$tablename)
 			$arr['password'] = 'NULL';
 		if(!array_key_exists('salt',$arr))
 			$arr['salt'] = 'NULL';
+		if(!array_key_exists('first',$arr))
+			$arr['first'] = 'NULL';
+		if(!array_key_exists('last',$arr))
+			$arr['last'] = 'NULL';
+		if(!array_key_exists('checkout_limit',$arr))
+			$arr['checkout_limit'] = 'NULL';
+		if(!array_key_exists('renew_limit',$arr))
+			$arr['renew_limit'] = 'NULL';
 	}
 	if($tablename == 'role')
-	{
-		if(!array_key_exists('username',$arr))
-			$arr['username'] = 'NULL';
-		if(!array_key_exists('password',$arr))
-			$arr['password'] = 'NULL';
-		if(!array_key_exists('salt',$arr))
-			$arr['salt'] = 'NULL';
-	}
+		if(!array_key_exists('description',$arr))
+			$arr['description'] = 'NULL';
+
 	if($tablename == 'tag')
 	{
-		if(!array_key_exists('username',$arr))
-			$arr['username'] = 'NULL';
-		if(!array_key_exists('password',$arr))
-			$arr['password'] = 'NULL';
-		if(!array_key_exists('salt',$arr))
-			$arr['salt'] = 'NULL';
+		if(!array_key_exists('name',$arr))
+			$arr['name'] = 'NULL';
+		if(!array_key_exists('type',$arr))
+			$arr['type'] = 'NULL';
 	}
 }
 ?>
