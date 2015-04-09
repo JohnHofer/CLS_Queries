@@ -102,4 +102,60 @@ function add_patron($arr)
 {
 	return add_to_table($arr,'patron');
 }
+
+function add_admin($arr)
+{
+	return add_to_table($arr,'admin');
+}
+
+function add_tag($arr)
+{
+	return add_to_table($arr,'tag');
+}
+
+function add_librarian($arr)
+{
+	return add_to_table($arr,'librarian');
+}
+
+function add_itemtag($arr)
+{
+	return add_to_table($arr,'itemtag');
+}
+
+function add_fine($arr)
+{
+	return add_to_table($arr,'fine');
+}
+
+function add_checkedout($arr)
+{
+	return add_to_table($arr,'checkedout');
+}
+
+function add_hold($arr)
+{
+	return add_to_table($arr,'hold');
+}
+
+function add_hardcopy($arr)
+{
+	return add_to_table($arr,'hardcopy');
+}
+
+function add_contributor($arr)
+{
+	return add_to_table($arr,'contributor');
+}
+
+function add_contribution($arr)
+{
+	return add_to_table($arr,'contribution');
+}
+
+function add_role($arr)
+{
+	return add_to_table($arr,'role');
+}
+
 ?>
