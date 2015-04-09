@@ -1,5 +1,4 @@
 <?php
-// Hello hello hello! Echo echo echo!
 function clean_string(&$arg)
 {
 	global $mysqli;
