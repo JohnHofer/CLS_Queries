@@ -27,7 +27,7 @@ function surround_in_quotes(&$arr)
 
 //NOT FINISHED - NEED FOR EACH TABLE
 function append_required_fields(&$arr,$tablename)
-{
+{ //change
 	if($tablename == 'admin')
 	{
 		if(!array_key_exists('username',$arr))
