@@ -158,4 +158,12 @@ function add_role($arr)
 	return add_to_table($arr,'role');
 }
 
+function get_book_by_barcode($bar_code)
+{
+	$mediaItemIdQuery 	= "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	$mediaItemInfoQuery = "SELECT * FROM `mediaitem` WHERE `id` = $mediaItemID";
+	$tagsQuery 			= "SELECT `name` FROM `tag` JOIN `itemtag` ON tag_id = tag.id WHERE mediaitem_id = $mediaItemID";
+	$contibutionsQuery 	= "SELECT `first` `last` `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaItemID";
+}
+
 ?>
