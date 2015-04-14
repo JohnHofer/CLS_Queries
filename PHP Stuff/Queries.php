@@ -258,10 +258,11 @@ function get_user_by_id($user_id)
 	clean_string($user_id);
 	
 	$user_info_query = "SELECT `first`, `last`, `email`, `phone`, `checkout_limit`, `renew_limit` FROM `patron` WHERE id = '$user_id'";
-		
+	
+	$result = $mysqli->query($user_info_query);
 		
 	//Check for a valid username (nonempty result on user_id query)
-	if($row = $user_info_query->fetch_assoc())
+	if($row = $result->fetch_assoc())
 	{
 		return $row;
 	}

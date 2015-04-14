@@ -67,21 +67,14 @@ echo "<pre>".print_r(get_user_info(0))."</pre>";
 		</fieldset>
 		<fieldset> <caption "Test : get_book_by_mediaItem_id()"/>
 <?php
-echo "<pre>".print_r(get_book_by_mediaItem_id(1))."</pre>";
-
-echo "<pre>".print_r(get_book_by_mediaItem_id(2))."</pre>";
-?>
-		</fieldset>
-		<fieldset> <caption "Test : get_book_by_mediaItem_id()"/>
-<?php
 echo "<p>Failure Expected</p><pre>".print_r(get_book_by_mediaItem_id(0))."</pre>";
-echo "<p>Failure Expected</p><pre>".print_r(get_book_by_mediaItem_id(1))."</pre>";
-echo "<p>Failure Expected</p><pre>".print_r(get_book_by_mediaItem_id(2))."</pre>";
+echo "<p>Success Expected</p><pre>".print_r(get_book_by_mediaItem_id(1))."</pre>";
+echo "<p>Success Expected</p><pre>".print_r(get_book_by_mediaItem_id(2))."</pre>";
 ?>
 		</fieldset>
 		<fieldset> <caption "Test : get_book_by_barcode()"/>
 <?php
-echo "<p>Failure Expected</p><pre>".print_r(get_book_by_barcode(1))."</pre>";
+echo "<p>Success Expected</p><pre>".print_r(get_book_by_barcode(1))."</pre>";
 
 echo "<p>Failure Expected</p><pre>".print_r(get_book_by_barcode(0))."</pre>";
 ?>
