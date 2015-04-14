@@ -1,4 +1,5 @@
 <?php
+// copyright SSD
 require_once "Connect.php";
 include_once "Hashing.php";
 include_once "Helpers.php";
