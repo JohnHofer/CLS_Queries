@@ -1,23 +1,24 @@
-function get_user_info($user_id)
+function change_status($barcode, $new_status)
 {
 	global $mysqli;
 	
-	clean_string($user_id);
-	
-	$user_info_query = "SELECT `first`, `last`, `email`, `phone`, `checkout_limit`, `renew_limit` FROM `$patron` WHERE id = '$user_id'";
-		
-		
-	//Check for a valid username (nonempty result on user_id query)
-	if($row = $user_info_query->fetch_assoc())
+	clean_string($barcode);
+	clean_string($new_status);
+
+	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `barcode` = $barcode";
+	$result = mysqli->query($status_query);
+				
+	//Check if query returns a number of rows that were changed
+	if($row = $result->fetch_assoc())
 	{
 		return $row
 	}
-			
-	else //Empty query
+
+	else //Empty query, no rows changed
 	{
 		$result = array();
-		$result['error'] = "Bad user id";			
-		$result['error_code'] = 3;
+		$result['error'] = "mysqli error";			
+		$result['error_code'] = 0;
 		return $result;
 	}
 }
