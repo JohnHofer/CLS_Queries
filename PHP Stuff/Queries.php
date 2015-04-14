@@ -251,19 +251,19 @@ function get_book_by_mediaItem_id($mediaitem_id)
 	return $mediaitem;
 }
 
-function get_user_info($user_id)
+function get_user_by_id($user_id)
 {
 	global $mysqli;
 	
 	clean_string($user_id);
 	
-	$user_info_query = "SELECT `first`, `last`, `email`, `phone`, `checkout_limit`, `renew_limit` FROM `$patron` WHERE id = '$user_id'";
+	$user_info_query = "SELECT `first`, `last`, `email`, `phone`, `checkout_limit`, `renew_limit` FROM `patron` WHERE id = '$user_id'";
 		
 		
 	//Check for a valid username (nonempty result on user_id query)
 	if($row = $user_info_query->fetch_assoc())
 	{
-		return $row
+		return $row;
 	}
 			
 	else //Empty query
