@@ -162,9 +162,90 @@ function add_role($arr)
 function get_book_by_barcode($bar_code)
 {
 	$mediaItemIdQuery 	= "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	
+	$result = $mysqli->query($mediaItemIdQuery);
+	
+	if(!$result)
+	{
+		// bad things happen \die?
+	}
+	else
+	{
+		$row = $result->fetch_assoc();
+		$mediaitem_id = $row["id"];
+	}
+	
+	return get_book_by_mediaItem_id($mediaitem_id);
+}
+
+function get_book_by_mediaItem_id($mediaitem_id)
+{
 	$mediaItemInfoQuery = "SELECT * FROM `mediaitem` WHERE `id` = $mediaItemID";
+	
+	$result = $mysqli->query($mediaItemInfoQuery);
+	
+	$mediaitem = array();
+	
+	if(!$result)
+	{
+		// bad things happen \die?
+	}
+	else
+	{
+		$row = $result->fetch_assoc();
+		$mediaitem_id = $row["id"];
+		
+		foreach($row as $key => $value)
+		{
+			$mediaitem[$key] = $value;
+		}
+	}
+	
 	$tagsQuery 			= "SELECT `name` FROM `tag` JOIN `itemtag` ON tag_id = tag.id WHERE mediaitem_id = $mediaItemID";
+	
+	$result = $mysqli->query($tagsQuery);
+	
+	if(!$result)
+	{
+		// it's ok to find no tags, just don't do anything then.
+	}
+	else
+	{
+		$tags = array();
+		for($i = 0; $row = $result->fetch_assoc(); $i++)
+		{
+			$tags[$i] = $row['name'];
+			$mediaitem_id = $row['id'];
+		}
+		
+		$mediaitem['tags'] = $tags;
+	}
+	
+	
 	$contibutionsQuery 	= "SELECT `first` `last` `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaItemID";
+	
+	$result = $mysqli->query($contibutionsQuery);
+	
+	if(!$result)
+	{
+		// it's ok to find no contributors, just don't do anything then.
+	}
+	else
+	{
+		$contributors = array();
+		for($i = 0; $row = $result->fetch_assoc(); $i++)
+		{
+			$tags[$i] = $row['name'];
+			if(isset($contributors[$row['description']]))
+			{
+				$contributors[$row[description]][] = array('first' => $row['first'], 'last' => $row['last']);
+			}
+			
+			$mediaitem_id = $row["id"];
+		}
+		
+		$mediaitem["tags"] = $tags;
+	}
 }
 
 ?>

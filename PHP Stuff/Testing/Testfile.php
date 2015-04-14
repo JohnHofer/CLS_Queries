@@ -8,7 +8,13 @@
 	<body>	
 
 
-<?php 
+<?php
+//error_reporting(E_ALL);
+
+//$error_descriptions[E_ERROR]   = "A fatal error has occurred";
+//$error_descriptions[E_WARNING] = "PHP issued a warning";
+//$error_descriptions[E_NOTICE]  = "This is just an informal notice";
+
 require_once "Queries.php";
 
 $result = login("Tester", "Hello World!", "librarian");
