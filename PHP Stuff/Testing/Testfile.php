@@ -20,6 +20,11 @@ require_once "Queries.php";
 $result = login("Tester", "Hello World!", "librarian");
 $result = get_librarian_permissions(1);
 
+
+
+?>
+		<fieldset>
+<?php
 $book = array('title'=>'The Hunger Games',
 			'year'=>'2010','isbn'=>'24234256',
 			'media_type'=>'book');
@@ -40,5 +45,6 @@ $result = add_mediaitem($book);
 echo "<pre>".print_r($result)."</pre>";
 
 ?>
+		</fieldset>
 	</body>
 </html>

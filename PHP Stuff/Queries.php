@@ -215,7 +215,6 @@ function get_book_by_mediaItem_id($mediaitem_id)
 		for($i = 0; $row = $result->fetch_assoc(); $i++)
 		{
 			$tags[$i] = $row['name'];
-			$mediaitem_id = $row['id'];
 		}
 		
 		$mediaitem['tags'] = $tags;
@@ -235,17 +234,21 @@ function get_book_by_mediaItem_id($mediaitem_id)
 		$contributors = array();
 		for($i = 0; $row = $result->fetch_assoc(); $i++)
 		{
-			$tags[$i] = $row['name'];
 			if(isset($contributors[$row['description']]))
 			{
 				$contributors[$row[description]][] = array('first' => $row['first'], 'last' => $row['last']);
 			}
-			
-			$mediaitem_id = $row["id"];
+			else
+			{
+				$contributors[$row[description]] = array();
+				$contributors[$row[description]][] = array('first' => $row['first'], 'last' => $row['last']);
+			}
 		}
 		
-		$mediaitem["tags"] = $tags;
+		$mediaitem["contributors"] = $contributors;
 	}
+	
+	return $mediaitem;
 }
 
 function get_user_info($user_id)
