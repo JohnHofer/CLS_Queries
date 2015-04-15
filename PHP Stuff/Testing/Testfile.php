@@ -39,8 +39,8 @@ require_once "../Queries.php";
 			<pre><?php print_r(add_mediaitem($book3)); ?></pre>
 		</fieldset>
 		<fieldset> 	<legend>	get_user_by_id()	</legend>
-				<pre><?php	print_r(get_user_by_id(1));	?></pre>
-				<pre><?php	print_r(get_user_by_id(0)); ?></pre>
+			<pre><?php	print_r(get_user_by_id(1));	?></pre>
+			<pre><?php	print_r(get_user_by_id(0)); ?></pre>
 		</fieldset>
 		<fieldset> 	<legend>	Test : get_book_by_mediaItem_id()	</legend>
 			<h4>get_book_by_mediaItem_id(0)</h4>
@@ -56,6 +56,10 @@ require_once "../Queries.php";
 			<pre><?php	print_r(get_book_by_barcode(1));	?></pre>
 			<p>Failure Expected</p>
 			<pre><?php	print_r(get_book_by_barcode(0));	?></pre>
+		</fieldset>
+		<fieldset> 	<legend>	delete_from_admin()	</legend>
+			<p>Success Expected</p>
+			<pre><?php	print_r(delete_from_admin()(1));	?></pre>
 		</fieldset>
 	</body>
 </html>

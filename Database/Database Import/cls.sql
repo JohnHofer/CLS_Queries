@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2015 at 03:34 PM
+-- Generation Time: Apr 15, 2015 at 03:53 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cls`
 --
-CREATE DATABASE IF NOT EXISTS `cls` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cls`;
 
 -- --------------------------------------------------------
 
@@ -33,7 +31,16 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(17) NOT NULL,
   `password_hash` varchar(20) NOT NULL,
   `salt` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password_hash`, `salt`) VALUES
+(3, 'admin1', 'password', 1),
+(5, 'admin2', 'password', 1),
+(6, 'admin3', 'password', 1);
 
 -- --------------------------------------------------------
 
@@ -367,7 +374,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `contributor`
 --
