@@ -94,6 +94,25 @@ function add_to_table($arr,$tablename)
 	return array();
 }
 
+function delete_from_table($fieldname,$key,$tablename)
+{
+	global $mysqli;
+	
+	$query = "DELETE FROM $tablename WHERE $fieldname='$key'";
+	
+	$result = $mysqli->query($query);
+
+	if($temp = check_sql_error($result))
+		return $temp;
+	
+	return array();
+}
+
+function delete_from_admin($id)
+{
+	return delete_from_table('id',$id,'admin');
+}
+
 function add_mediaitem($arr)
 {
 	return add_to_table($arr,'mediaitem');
