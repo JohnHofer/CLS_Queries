@@ -337,6 +337,61 @@ function change_status($barcode, $new_status)
 	}
 }
 
+function check_out($barcode,$patron_id)
+{
+	global $mysqli;
+	
+	clean_string($barcode);
+	clean_string($patron_id);
+	
+	//Query for the hardcopy
+	$check_for_item_query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	$item_result = $mysqli->query($check_for_item_query);
+	if($temp = check_sql_error($item_result))
+		return $temp;
+		
+	//Query for the patron
+	$check_for_patron_query = "SELECT * FROM `patron` WHERE `id` = $patron_id";
+	$patron_result = $mysqli->query($check_for_item_query);	
+	if($temp = check_sql_error($patron_result))
+		return $temp;
+	
+	if($item = $item_result->fetch_assoc)
+	{ //The book is exists. Check it out.
+		$checkout_duration = $item['checkout_duration'];
+		$renew_count = $item['renew_count'];
+		
+		//If checkout_duration or renew_count = 0, this book cannot be checked out
+		if($checkout_duration === 0 || $renew_count === 0)
+			return array('error'=>'Book cannot be checked out of library', 'error_code'=>5);
+		
+		if($patron = $patron_result->fetch_assoc())
+		{ //The patron exists. Have they exceeded checkout limit?
+			$checkout_list = $mysqli->query("SELECT * FROM `checkedout` WHERE `id` = $patron_id");
+			if($temp = check_sql_error($checkout_list)
+				return $temp;
+			if($checkout_list->num_rows < $patron['checkout_limit'] )
+			{//Go ahead and checkout the book!
+				$date = new DateTime();
+				$date->add(DateInterval::createFromDateString("$checkout_duration days"));
+				$arr = array('patron_id'=>$patron_id, 'hardcopy_barcode'=>$barcode,
+					'due_date'=>$date->format('Y-m-d'), 'renew_count'=$renew_count);
+				return add_checkedout($arr);
+			}
+			else
+			{
+				return array('error'=>'Checkout limit exceeded', 'error_code'=>7);
+			}
+		}
+		else
+		{
+			return array('error'=>'The patron could not be found', 'error_code'=>6);
+		}
+	}
+	else
+		return array('error'=>"No such book exists", 'error_code'=>4);
+}
+
 function check_in($barcode)
 {
 	global $mysqli;
