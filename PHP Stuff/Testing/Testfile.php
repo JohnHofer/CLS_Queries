@@ -77,5 +77,11 @@ require_once "TestFunctions.php";
 			<p>Failure Expected</p>
 			<pre><?php	print_r(check_in(0));	?></pre>
 		</fieldset>
+		<fieldset> 	<legend>	check_out()	</legend>
+			<p>Success Expected</p>
+			<pre><?php	print_r(check_out(1));	?></pre>
+			<p>Failure Expected</p>
+			<pre><?php	print_r(check_out(0));	?></pre>
+		</fieldset>
 	</body>
 </html>
