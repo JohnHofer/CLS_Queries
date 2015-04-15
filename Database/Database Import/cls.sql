@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2015 at 04:25 PM
+-- Generation Time: Apr 15, 2015 at 04:56 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -56,6 +56,13 @@ CREATE TABLE IF NOT EXISTS `checkedout` (
   `due_date` date NOT NULL,
   `renew_count` tinyint(3) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `checkedout`
+--
+
+INSERT INTO `checkedout` (`patron_id`, `hardcopy_barcode`, `due_date`, `renew_count`) VALUES
+(1, 1, '2015-01-01', 1);
 
 -- --------------------------------------------------------
 

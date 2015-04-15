@@ -58,8 +58,24 @@ require_once "TestFunctions.php";
 			<pre><?php	print_r(get_book_by_barcode(0));	?></pre>
 		</fieldset>
 		<fieldset> 	<legend>	delete_from_admin()	</legend>
+			<p>Failure Expected</p>
+			<pre><?php	print_r(delete_from_admin(1));	?></pre>
+		</fieldset>
+		<fieldset> 	<legend>	change_status()	</legend>
 			<p>Success Expected</p>
-			<pre><?php	print_r(delete_from_admin()(1));	?></pre>
+			<pre><?php	print_r(change_status(1, 'Lost'));	?></pre>
+			<p>Success Expected</p>
+			<pre><?php	print_r(change_status(2, 'Damaged/In Repair'));	?></pre>
+			<p>Failure Expected</p>
+			<pre><?php	print_r(change_status(0, 'Lost'));	?></pre>
+			<p>Failure Expected</p>
+			<pre><?php	print_r(change_status(1, 'notarealstatus'));	?></pre>
+		</fieldset>
+		<fieldset> 	<legend>	check_in()	</legend>
+			<p>Success Expected</p>
+			<pre><?php	print_r(check_in(1));	?></pre>
+			<p>Failure Expected</p>
+			<pre><?php	print_r(check_in(0));	?></pre>
 		</fieldset>
 	</body>
 </html>
