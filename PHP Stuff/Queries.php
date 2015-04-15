@@ -317,16 +317,29 @@ function change_status($barcode, $new_status)
 	
 	clean_string($barcode);
 	clean_string($new_status);
-
-	$status_query = "UPDATE `hardcopy` SET `status`= '$new_status' WHERE `barcode` = $barcode";
-	$result = $mysqli->query($status_query);
 	
+	$check_barcode_query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	$result = $mysqli->query($check_barcode_query);
 	if($temp = check_sql_error($result))
 	{
 		return $temp;
 	}
 	
-	return array();
+	if($item = $result->fetch_assoc())
+	{
+		$status_query = "UPDATE `hardcopy` SET `status`= '$new_status' WHERE `barcode` = $barcode";
+		$result = $mysqli->query($status_query);
+	
+		if($temp = check_sql_error($result))
+		{
+			return $temp;
+		}
+		return array();
+	}
+	else
+	{
+		return array('error'=>'Barcode not found', 'error_code'=>4);
+	}
 }
 
 function check_out($barcode,$patron_id)
@@ -344,7 +357,7 @@ function check_out($barcode,$patron_id)
 		
 	//Query for the patron
 	$check_for_patron_query = "SELECT * FROM `patron` WHERE `id` = $patron_id";
-	$patron_result = $mysqli->query($check_for_item_query);	
+	$patron_result = $mysqli->query($check_for_patron_query);	
 	if($temp = check_sql_error($patron_result))
 		return $temp;
 	
