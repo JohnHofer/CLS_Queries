@@ -311,4 +311,60 @@ function get_user_by_id($user_id)
 	}
 }
 
+function change_status($barcode, $new_status)
+{
+	global $mysqli;
+	
+	clean_string($barcode);
+	clean_string($new_status);
+
+	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `barcode` = $barcode";
+	$result = mysqli->query($status_query);
+	
+	if($temp = check_sql_error($result))
+		return $temp;
+					
+	//Check if query returns a number of rows that were changed
+	if($row = $result->fetch_assoc())
+		return $row
+
+	else //Empty query, no rows changed
+	{
+		$result = array();
+		$result['error'] = "barcode not found";			
+		$result['error_code'] = 4;
+		return $result;
+	}
+}
+
+function check_in($barcode)
+{
+	global $mysqli;
+	
+	clean_string($barcode);
+	
+	$check_for_item_query = "SELECT * FROM `checked_out` WHERE `hardcopy_barcode` = $barcode"; 
+	$result = mysqli->query($check_for_item_query);
+	
+	if($temp = check_sql_error($result))
+		return $temp;
+			
+	else	
+	{
+		$check_in_query = "DELETE FROM `checked_out` WHERE `hardcopy_barcode` = $barcode";
+		$result = mysqli->query($check_in_query);
+		
+		if($row = $result->fetch_assoc())
+			return $row
+
+		else 
+		{
+			$result = array();
+			$result['error'] = "barcode not found";			
+			$result['error_code'] = 4;
+			return $result;
+		}
+	}
+}
+
 ?>
