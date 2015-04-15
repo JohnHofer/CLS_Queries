@@ -5,7 +5,7 @@ function change_status($barcode, $new_status)
 	clean_string($barcode);
 	clean_string($new_status);
 
-	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `barcode` = $barcode";
+	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `hardcopy_barcode` = $barcode";
 	$result = mysqli->query($status_query);
 	
 	if($temp = check_sql_error($result))
@@ -30,7 +30,7 @@ function check_in($barcode)
 	
 	clean_string($barcode);
 	
-	$check_out_query = "DELETE FROM checked_out` WHERE `barcode` = $barcode";
+	$check_out_query = "DELETE FROM checked_out` WHERE `hardcopy_barcode` = $barcode";
 	$result = mysqli->query($check_in_query);
 	
 	if(!$result) 
