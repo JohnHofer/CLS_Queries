@@ -5,3 +5,4 @@ ERRORS:
 2 - bad password
 3 - id not found
 4 – barcode not found
+5 – combination not found
