@@ -322,19 +322,11 @@ function change_status($barcode, $new_status)
 	$result = $mysqli->query($status_query);
 	
 	if($temp = check_sql_error($result))
-		return $temp;
-					
-	//Check if query returns a number of rows that were changed
-	if($row = $result->fetch_assoc())
-		return $row;
-
-	else //Empty query, no rows changed
 	{
-		$result = array();
-		$result['error'] = "barcode not found";			
-		$result['error_code'] = 4;
-		return $result;
+		return $temp;
 	}
+	
+	return array();
 }
 
 function check_out($barcode,$patron_id)
@@ -368,14 +360,14 @@ function check_out($barcode,$patron_id)
 		if($patron = $patron_result->fetch_assoc())
 		{ //The patron exists. Have they exceeded checkout limit?
 			$checkout_list = $mysqli->query("SELECT * FROM `checkedout` WHERE `id` = $patron_id");
-			if($temp = check_sql_error($checkout_list)
+			if($temp = check_sql_error($checkout_list))
 				return $temp;
 			if($checkout_list->num_rows < $patron['checkout_limit'] )
 			{//Go ahead and checkout the book!
 				$date = new DateTime();
 				$date->add(DateInterval::createFromDateString("$checkout_duration days"));
 				$arr = array('patron_id'=>$patron_id, 'hardcopy_barcode'=>$barcode,
-					'due_date'=>$date->format('Y-m-d'), 'renew_count'=$renew_count);
+					'due_date'=>$date->format('Y-m-d'), 'renew_count'=>$renew_count);
 				return add_checkedout($arr);
 			}
 			else
