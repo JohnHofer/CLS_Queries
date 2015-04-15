@@ -6,7 +6,7 @@
 		<title>Test File!</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
-	<body>	
+	<body>
 
 
 <?php
@@ -17,6 +17,18 @@
 //$error_descriptions[E_NOTICE]  = "This is just an informal notice";
 
 require_once "../Queries.php";
+
+function goodbye_world()
+{
+	global $mysqli;
+	
+	$tables = Array('admin','librarian','patron',
+				'checkedout','contribution','contributor',
+				'fine','hardcopy','hold','itemtag',
+				'mediaitem','role','tag');
+	foreach($tables as $table)
+		$result = $mysqli->query("TRUNCATE $table");
+}
 
 
 ?>
