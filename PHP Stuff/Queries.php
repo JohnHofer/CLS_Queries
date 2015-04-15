@@ -232,8 +232,9 @@ function get_book_by_mediaItem_id($mediaitem_id)
 		$mediaitem['tags'] = $tags;
 	}
 	
+	$contributors = array();
 	
-	$contibutionsQuery 	= "SELECT `first` `last` `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaitem_id";
+	$contibutionsQuery 	= "SELECT `first`, `last`, `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaitem_id";
 	
 	$result = $mysqli->query($contibutionsQuery);
 	
@@ -243,22 +244,21 @@ function get_book_by_mediaItem_id($mediaitem_id)
 	}
 	else
 	{
-		$contributors = array();
-		for($i = 0; $row = $result->fetch_assoc(); $i++)
+		while($row = $result->fetch_assoc())
 		{
 			if(isset($contributors[$row['description']]))
 			{
-				$contributors[$row[description]][] = array('first' => $row['first'], 'last' => $row['last']);
+				$contributors[$row['description']][] = array('first' => $row['first'], 'last' => $row['last']);
 			}
 			else
 			{
-				$contributors[$row[description]] = array();
-				$contributors[$row[description]][] = array('first' => $row['first'], 'last' => $row['last']);
+				$contributors[$row['description']] = array();
+				$contributors[$row['description']][] = array('first' => $row['first'], 'last' => $row['last']);
 			}
 		}
-		
-		$mediaitem['contributors'] = $contributors;
 	}
+	
+	$mediaitem['contributors'] = $contributors;
 	
 	return $mediaitem;
 }
