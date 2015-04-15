@@ -159,8 +159,10 @@ function add_role($arr)
 	return add_to_table($arr,'role');
 }
 
-function get_book_by_barcode($bar_code)
+function get_book_by_barcode($barcode)
 {
+	global $mysqli;
+	
 	$mediaItemIdQuery 	= "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
 	
 	$result = $mysqli->query($mediaItemIdQuery);
@@ -172,7 +174,7 @@ function get_book_by_barcode($bar_code)
 	else
 	{
 		$row = $result->fetch_assoc();
-		$mediaitem_id = $row["id"];
+		$mediaitem_id = $row['mediaitem_id'];
 	}
 	
 	return get_book_by_mediaItem_id($mediaitem_id);
@@ -180,7 +182,9 @@ function get_book_by_barcode($bar_code)
 
 function get_book_by_mediaItem_id($mediaitem_id)
 {
-	$mediaItemInfoQuery = "SELECT * FROM `mediaitem` WHERE `id` = $mediaItemID";
+	global $mysqli;
+
+	$mediaItemInfoQuery = "SELECT * FROM `mediaitem` WHERE `id` = $mediaitem_id";
 	
 	$result = $mysqli->query($mediaItemInfoQuery);
 	
@@ -192,16 +196,24 @@ function get_book_by_mediaItem_id($mediaitem_id)
 	}
 	else
 	{
-		$row = $result->fetch_assoc();
-		$mediaitem_id = $row["id"];
-		
-		foreach($row as $key => $value)
+		if($row = $result->fetch_assoc())
 		{
-			$mediaitem[$key] = $value;
+			$mediaitem_id = $row['id'];
+			
+			foreach($row as $key => $value)
+			{
+				$mediaitem[$key] = $value;
+			}
+		}
+		else
+		{
+			$mediaitem['error'] = 'Not found';
+			$mediaitem['error_no'] = 1;
+			return $mediaitem;
 		}
 	}
 	
-	$tagsQuery 			= "SELECT `name` FROM `tag` JOIN `itemtag` ON tag_id = tag.id WHERE mediaitem_id = $mediaItemID";
+	$tagsQuery 			= "SELECT `name` FROM `tag` JOIN `itemtag` ON tag_id = tag.id WHERE mediaitem_id = $mediaitem_id";
 	
 	$result = $mysqli->query($tagsQuery);
 	
@@ -221,7 +233,7 @@ function get_book_by_mediaItem_id($mediaitem_id)
 	}
 	
 	
-	$contibutionsQuery 	= "SELECT `first` `last` `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaItemID";
+	$contibutionsQuery 	= "SELECT `first` `last` `description` FROM `contribution` JOIN `contributor` ON contributor_id = contributor.id JOIN `role` ON role_id = role.id WHERE mediaitem_id = $mediaitem_id";
 	
 	$result = $mysqli->query($contibutionsQuery);
 	
@@ -245,7 +257,7 @@ function get_book_by_mediaItem_id($mediaitem_id)
 			}
 		}
 		
-		$mediaitem["contributors"] = $contributors;
+		$mediaitem['contributors'] = $contributors;
 	}
 	
 	return $mediaitem;
