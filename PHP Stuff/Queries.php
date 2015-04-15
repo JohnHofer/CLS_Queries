@@ -348,23 +348,13 @@ function check_in($barcode)
 	
 	if($temp = check_sql_error($result))
 		return $temp;
-			
-	else	
-	{
-		$check_in_query = "DELETE FROM `checked_out` WHERE `hardcopy_barcode` = $barcode";
-		$result = mysqli->query($check_in_query);
-		
-		if($row = $result->fetch_assoc())
-			return $row
-
-		else 
-		{
-			$result = array();
-			$result['error'] = "barcode not found";			
-			$result['error_code'] = 4;
-			return $result;
-		}
+	
+	if($result->fetch_assoc)
+	{ //The book is checked out, check it in
+		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
+	else
+		return array('error'=>"Book with barcode $barcode is not checked out", 'error_code'=>4);
 }
 
 ?>
