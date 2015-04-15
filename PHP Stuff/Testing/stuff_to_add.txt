@@ -1,3 +1,10 @@
+to add time:
+
+$date = new DateTime();
+$date->add(DateInterval::createFromDateString('21 days'));
+submit $date->format('Y-m-d') to database
+
+
 function change_status($barcode, $new_status)
 {
 	global $mysqli;
@@ -5,7 +12,7 @@ function change_status($barcode, $new_status)
 	clean_string($barcode);
 	clean_string($new_status);
 
-	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `hardcopy_barcode` = $barcode";
+	$status_query = "UPDATE `hardcopy` SET `status`= $new_status WHERE `barcode` = $barcode";
 	$result = mysqli->query($status_query);
 	
 	if($temp = check_sql_error($result))
@@ -30,16 +37,26 @@ function check_in($barcode)
 	
 	clean_string($barcode);
 	
-	$check_out_query = "DELETE FROM checked_out` WHERE `hardcopy_barcode` = $barcode";
-	$result = mysqli->query($check_in_query);
+	$check_for_item_query = "SELECT * FROM `checked_out` WHERE `hardcopy_barcode` = $barcode"; 
+	$result = mysqli->query($check_for_item_query);
 	
-	if(!$result) 
+	if($temp = check_sql_error($result))
+		return $temp;
+			
+	else	
 	{
-		$result = array();
-		$result['error'] = "barcode not found";			
-		$result['error_code'] = 4;
+		$check_in_query = "DELETE FROM checked_out` WHERE `hardcopy_barcode` = $barcode";
+		$result = mysqli->query($check_in_query);
+		
+		if($row = $result->fetch_assoc())
+			return $row
+
+		else 
+		{
+			$result = array();
+			$result['error'] = "barcode not found";			
+			$result['error_code'] = 4;
+			return $result;
+		}
 	}
-	else $result = array();
-	
-	return $result;
 }

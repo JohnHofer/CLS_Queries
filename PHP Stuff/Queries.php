@@ -236,6 +236,7 @@ function get_book_by_mediaItem_id($mediaitem_id)
 	
 	$result = $mysqli->query($tagsQuery);
 	
+	
 	if(!$result)
 	{
 		// it's ok to find no tags, just don't do anything then.
@@ -291,7 +292,10 @@ function get_user_by_id($user_id)
 	$user_info_query = "SELECT `first`, `last`, `email`, `phone`, `checkout_limit`, `renew_limit` FROM `patron` WHERE id = '$user_id'";
 	
 	$result = $mysqli->query($user_info_query);
-		
+	
+	if($temp = check_sql_error($result))
+		return $temp;
+	
 	//Check for a valid username (nonempty result on user_id query)
 	if($row = $result->fetch_assoc())
 	{
