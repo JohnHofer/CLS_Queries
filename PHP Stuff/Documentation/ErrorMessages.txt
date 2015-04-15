@@ -4,3 +4,4 @@ ERRORS:
 1 - bad username
 2 - bad password
 3 - id not found
+4 – barcode not found
