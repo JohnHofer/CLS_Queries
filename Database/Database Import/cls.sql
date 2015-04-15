@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2015 at 03:53 PM
+-- Generation Time: Apr 15, 2015 at 04:25 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `cls`
 --
+CREATE DATABASE IF NOT EXISTS `cls` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `cls`;
 
 -- --------------------------------------------------------
 
@@ -119,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `hardcopy` (
   `mediaitem_id` int(10) unsigned NOT NULL,
   `copy_no` tinyint(3) unsigned NOT NULL,
   `call_no` varchar(20) NOT NULL,
-  `status` enum('Available','Checked Out','Overdue','Damaged/In Repair','Lost','In Transit','Out of Circulation','On Hold') NOT NULL,
+  `status` enum('Damaged/In Repair','Lost','In Transit','Out of Circulation','Normal') NOT NULL DEFAULT 'Normal',
   `checkout_duration` tinyint(3) unsigned NOT NULL,
   `renew_limit` tinyint(3) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -129,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `hardcopy` (
 --
 
 INSERT INTO `hardcopy` (`barcode`, `mediaitem_id`, `copy_no`, `call_no`, `status`, `checkout_duration`, `renew_limit`) VALUES
-(1, 1, 1, '', 'Available', 0, 1);
+(1, 1, 1, '', '', 0, 1);
 
 -- --------------------------------------------------------
 
