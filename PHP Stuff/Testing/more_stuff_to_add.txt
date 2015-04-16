@@ -11,7 +11,7 @@ function remove_hold($mediaitem_id, $patron_id)
 	if($temp = check_sql_error($result))
 		return $temp;
 	
-	if($result->fetch_assoc)
+	if($result->fetch_assoc())
 	{ //The book is on hold
 		$query = "DELETE FROM $hold WHERE `mediaitem_id` = $mediaitem_id AND `patron_id` = $patron_id";
 	
