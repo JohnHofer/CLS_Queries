@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2015 at 04:56 PM
+-- Generation Time: Apr 16, 2015 at 02:49 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `hardcopy` (
 --
 
 INSERT INTO `hardcopy` (`barcode`, `mediaitem_id`, `copy_no`, `call_no`, `status`, `checkout_duration`, `renew_limit`) VALUES
-(1, 1, 1, '', '', 0, 1);
+(1, 1, 1, '', 'Lost', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `mediaitem` (
   `edition` tinyint(3) unsigned DEFAULT NULL,
   `volume` int(10) unsigned DEFAULT NULL,
   `issue_no` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=87 ;
 
 --
 -- Dumping data for table `mediaitem`
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `mediaitem` (
 
 INSERT INTO `mediaitem` (`id`, `title`, `year`, `isbn`, `media_type`, `edition`, `volume`, `issue_no`) VALUES
 (1, 'The Book of Mormon', 1900, 0, 'Book', NULL, NULL, NULL),
-(2, 'The Hunger Games', 2010, 24234256, 'Book', NULL, NULL, NULL);
+(75, 'The Hunger Games', 2010, 24234256, 'Book', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -398,7 +398,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `mediaitem`
 --
 ALTER TABLE `mediaitem`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
 --
 -- AUTO_INCREMENT for table `patron`
 --
