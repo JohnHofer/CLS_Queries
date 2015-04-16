@@ -486,7 +486,50 @@
 		return $input_expected_output_pairs;
 	}
 	
-	
+	function standard_remove_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					0,
+					1
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_no' 	=> 1
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1,
+					1
+				), 
+				array
+				(
+					
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2,
+					1
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_no'	=> 1
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
 	
 	
 	

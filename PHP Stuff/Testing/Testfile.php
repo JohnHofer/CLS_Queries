@@ -44,6 +44,8 @@ require_once "Testdata.php";
 	functionTestBlock(standard_check_in_IEO_pairs(), 'check_in');
 	
 	functionTestBlock(standard_check_out_IEO_pairs(), 'check_out');
+	
+	functionTestBlock(standard_remove_hold_IEO_pairs(), 'remove_hold');
 ?>
 		
 <!--		<fieldset> 	<legend>	check_out()	</legend>
