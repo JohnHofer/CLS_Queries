@@ -55,8 +55,10 @@ function place_hold($mediaitem_id,$patron_id)
 			//$arr = array('patron_id'=>$patron_id, 'mediaitem_id'=>$mediaitem_id,
 			//	'time_placed'=>$date->format('Y-m-d'), 'expiration_date'=>$date->format('Y-m-d'));
 			//	return add_hold($arr);
-			INSERT INTO hold('patron_id'=>$patron_id, 'mediaitem_id'=>$mediaitem_id,
-				'time_placed'=>$date->format('Y-m-d'), 'expiration_date'=>$date->format('Y-m-d'));			
+			$query = "INSERT INTO hold('patron_id', 'mediaitem_id', 'time_placed', 'expiration_date')
+				VALUES($patron_id, $mediaitem_id, $time_placed->format('Y-m-d'), $date->format('Y-m-d'))";
+				
+			$mysqli->query($query);
 		}
 		
 		else
