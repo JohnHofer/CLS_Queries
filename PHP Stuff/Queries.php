@@ -227,7 +227,7 @@ function get_book_by_mediaItem_id($mediaitem_id)
 		else
 		{
 			$mediaitem['error'] = 'Not found';
-			$mediaitem['error_no'] = 1;
+			$mediaitem['error_code'] = 1;
 			return $mediaitem;
 		}
 	}
@@ -366,7 +366,7 @@ function check_out($barcode,$patron_id)
 	if($temp = check_sql_error($patron_result))
 		return $temp;
 	
-	if($item = $item_result->fetch_assoc)
+	if($item = $item_result->fetch_assoc())
 	{ //The book is exists. Check it out.
 		$checkout_duration = $item['checkout_duration'];
 		$renew_count = $item['renew_count'];
@@ -423,7 +423,7 @@ function check_in($barcode)
 }
 
 
-// Testing Query :"INSERT INTO `hold`(`patron_id`, `mediaitem_id`, `time_placed`, `expiration_date`) VALUES (1, 1, '2015-01-01', '2015-04-01')"
+// Testing Query : "INSERT INTO `hold`(`patron_id`, `mediaitem_id`, `expiration_date`) VALUES (1, 1, '2015-04-01')"
 function remove_hold($mediaitem_id, $patron_id)
 {
 	global $mysqli;

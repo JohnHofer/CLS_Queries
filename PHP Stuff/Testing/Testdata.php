@@ -31,7 +31,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no' 	=> 1
+					'error_code' 	=> 1
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -54,7 +54,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no'	=> 1
+					'error_code'	=> 1
 				)
 			);
 			
@@ -237,7 +237,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no' 	=> 1
+					'error_code' 	=> 1
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -286,7 +286,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no'	=> 1
+					'error_code'	=> 1
 				)
 			);
 			
@@ -305,7 +305,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no' 	=> 1
+					'error_code' 	=> 1
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -361,7 +361,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no' 	=> 1
+					'error_code' 	=> 1
 				)
 			);
 			
@@ -392,7 +392,7 @@
 				array
 				(
 					'error' 	=> 'Barcode not found',
-					'error_no' 	=> 4
+					'error_code' 	=> 4
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -405,7 +405,7 @@
 				array
 				(
 					'error' 	=> 'Barcode not found',
-					'error_no' 	=> 4
+					'error_code' 	=> 4
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -418,7 +418,7 @@
 				array
 				(
 					'error' => 'Not a valid enum value',
-					'error_no' => 9
+					'error_code' => 9
 				)
 			);
 			
@@ -499,7 +499,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no' 	=> 1
+					'error_code' 	=> 1
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -524,7 +524,7 @@
 				array
 				(
 					'error' 	=> 'Not found',
-					'error_no'	=> 1
+					'error_code'	=> 1
 				)
 			);
 			
