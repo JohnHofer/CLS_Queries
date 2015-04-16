@@ -532,7 +532,50 @@
 	}
 	
 	
-	
+	function standard_place_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1,
+					1
+				), 
+				array
+				(
+					
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1,
+					2
+				), 
+				array
+				(
+					'error' 		=> 'The patron could not be found',
+					'error_code' 	=> 6
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2,
+					1
+				), 
+				array
+				(
+					'error' 		=> 'No such item exists',
+					'error_code'	=> 4
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
 	
 	
 	
