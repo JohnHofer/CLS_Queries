@@ -328,6 +328,9 @@ function change_status($barcode, $new_status)
 	if($item = $result->fetch_assoc())
 	{
 		$status_query = "UPDATE `hardcopy` SET `status`= '$new_status' WHERE `barcode` = $barcode";
+		echo "<p>$status_query</p>";
+		echo "<p>$new_status</p>";
+		
 		$result = $mysqli->query($status_query);
 	
 		if($temp = check_sql_error($result))

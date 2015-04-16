@@ -64,7 +64,7 @@ require_once "TestFunctions.php";
 		<fieldset> 	<legend>	change_status()	</legend>
 			<p>Success Expected</p>
 			<pre><?php	print_r(change_status(1, 'Lost'));	?></pre>
-			<p>Success Expected</p>
+			<p>Failure Expected</p>
 			<pre><?php	print_r(change_status(2, 'Damaged/In Repair'));	?></pre>
 			<p>Failure Expected</p>
 			<pre><?php	print_r(change_status(0, 'Lost'));	?></pre>
