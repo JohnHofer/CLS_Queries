@@ -332,8 +332,6 @@ function change_status($barcode, $new_status)
 			return array('error'=>'Not a valid enum value', 'error_code'=>9);
 		}
 		$status_query = "UPDATE `hardcopy` SET `status`= '$new_status' WHERE `barcode` = $barcode";
-		echo "<p>$status_query</p>";
-		echo "<p>$new_status</p>";
 		
 		$result = $mysqli->query($status_query);
 	

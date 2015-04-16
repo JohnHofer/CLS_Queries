@@ -20,6 +20,10 @@ require_once "../Queries.php";
 require_once "TestFunctions.php";
 
 ?>
+		<fieldset> 	<legend>	verify()		</legend>
+			<?php//$result = get_librarian_permissions(1); ?>
+			<pre><?php	print_r(verify(array("Tester", "Hello World!", "librarian"), array('id'=> 1), 'login'));	?><pre>
+		</fieldset>
 		<fieldset> 	<legend>	login()		</legend>
 			<?php//$result = get_librarian_permissions(1); ?>
 			<pre><?php	print_r(login("Tester", "Hello World!", "librarian"));	?><pre>

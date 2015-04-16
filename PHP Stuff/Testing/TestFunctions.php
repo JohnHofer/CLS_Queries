@@ -16,9 +16,25 @@ function goodbye_world()
 
 function verify($input, $expected_output, $function_name)
 {
-	$result = call_user_func($function_name, $input);
+	$parsed_input = "";
 	
-	echo "<pre>".print_r($result)."</pre>";
+	$i = 0;
+	foreach($input as $val);
+	{
+		if($i > 0)
+		{
+			$parsed_input = $parsed_input.", ";
+		}
+		
+		$parsed_input = $parsed_input."'$val'";
+		$i++;
+	}
+
+	$result = call_user_func($function_name, $parsed_input);
+	
+	echo "<pre>";
+	print_r($result);
+	echo "</pre>";
 }
 
 ?>
