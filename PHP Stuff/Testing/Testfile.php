@@ -19,15 +19,80 @@
 require_once "../Queries.php";
 require_once "TestFunctions.php";
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$functionName = 'login';
+
+	$input_expected_output_pairs = array();
+	$input_expected_output_pairs[] = generate_IEO_pair(	array("Tester", "Hello World!", "librarian"), 
+														array('id'=> 1));
+	$input_expected_output_pairs[] = generate_IEO_pair(	array("Not the username!", "Hello World!", "librarian"), 
+														array('error' => 'Bad username', 'error_code' => 1));
+	$input_expected_output_pairs[] = generate_IEO_pair(	array("Tester", "Not the password!", "librarian"), 
+														array('error' => 'Bad password', 'error_code' => 2));
+	$input_expected_output_pairs[] = generate_IEO_pair(	array("Not the username", "Not the password!", "librarian"), 
+														array('error' => 'Bad username', 'error_code' => 1));
+				
+	functionTestBlock($input_expected_output_pairs, $functionName);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$functionName = 'add_mediaitem';
+
+	$input_expected_output_pairs = array();
+	$input_expected_output_pairs[] = generate_IEO_pair
+	(	
+		array
+		(	
+			array
+			(
+				'title' 		=> 'The Hunger Games', 
+				'year' 			=> '2010',
+				'isbn' 			=> '24234256',
+				'media_type' 	=> 'book'
+			)
+		), 
+		array
+		() 
+	);
+	$input_expected_output_pairs[] = generate_IEO_pair
+	(	
+		array
+		(	
+			array
+			(
+				'title'	=> 'The Bible',
+				'year' 	=> '0'
+			)
+		), 
+		array
+		(
+			'error' 		=> 'Column \'media_type\' cannot be null', 
+			'error_code' 	=> 0
+		)
+	);
+	$input_expected_output_pairs[] = generate_IEO_pair
+	(
+		array
+		(
+			array
+			(
+				'year' 			=> '2014',
+				'isbn' 			=> '213457',
+				'media_type' 	=> 'book'
+			)
+		), 
+		array
+		(
+			'error' 		=> 'Column \'title\' cannot be null',
+			'error_code' 	=> 0
+		)
+	);
+	
+	echo "<pre>";
+	print_r($input_expected_output_pairs);
+	echo "</pre>";
+	
+	functionTestBlock($input_expected_output_pairs, $functionName);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
-		<fieldset> 	<legend>	verify()		</legend>
-			<?php//$result = get_librarian_permissions(1); ?>
-			<pre><?php	print_r(verify(array("Tester", "Hello World!", "librarian"), array('id'=> 1), 'login'));	?><pre>
-		</fieldset>
-		<fieldset> 	<legend>	login()		</legend>
-			<?php//$result = get_librarian_permissions(1); ?>
-			<pre><?php	print_r(login("Tester", "Hello World!", "librarian"));	?><pre>
-		</fieldset>
 		<fieldset> 	<legend>	add_mediaitem()	</legend>
 			<?php
 			$book1 = array('title'=>'The Hunger Games',
@@ -38,7 +103,6 @@ require_once "TestFunctions.php";
 			$book3 = array('year'=>'2014','isbn'=>'213457',
 						'media_type'=>'book');
 			?>
-			<pre><?php 	print_r(add_mediaitem($book1)); ?></pre>
 			<pre><?php 	print_r(add_mediaitem($book2)); ?></pre>
 			<pre><?php print_r(add_mediaitem($book3)); ?></pre>
 		</fieldset>
