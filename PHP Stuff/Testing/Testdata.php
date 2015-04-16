@@ -342,7 +342,15 @@
 
 								)
 
-						)
+						),
+					
+					'barcode' 			=> 1,
+					'mediaitem_id' 		=> 1,
+					'copy_no' 			=> 1,
+					'call_no' 			=> '',
+					'status' 			=> 'Lost',
+					'checkout_duration' => 0,
+					'renew_limit' 		=> 1
 				)
 			);
 			
@@ -360,8 +368,7 @@
 				), 
 				array
 				(
-					'error' 	=> 'Not found',
-					'error_code' 	=> 1
+					
 				)
 			);
 			
