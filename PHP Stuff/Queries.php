@@ -327,6 +327,10 @@ function change_status($barcode, $new_status)
 	
 	if($item = $result->fetch_assoc())
 	{
+		if(!is_possible_enum_val($new_status,'hardcopy_status'))
+		{
+			return array('error'=>'Not a valid enum value', 'error_code'=>9);
+		}
 		$status_query = "UPDATE `hardcopy` SET `status`= '$new_status' WHERE `barcode` = $barcode";
 		echo "<p>$status_query</p>";
 		echo "<p>$new_status</p>";
