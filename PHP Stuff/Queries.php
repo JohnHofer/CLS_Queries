@@ -414,12 +414,39 @@ function check_in($barcode)
 	if($temp = check_sql_error($result))
 		return $temp;
 	
-	if($result->fetch_assoc())
+	if($result->fetch_assoc)
 	{ //The book is checked out, check it in
 		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
 	else
 		return array('error'=>"Book with barcode $barcode is not checked out", 'error_code'=>4);
+}
+
+function remove_hold($mediaitem_id, $patron_id)
+{
+	global $mysqli;
+	
+	clean_string($mediaitem_id);
+	clean_string($patron_id);
+	
+	$check_for_hold_query = "SELECT * FROM `hold` WHERE `mediaitem_id` = $mediaitem_id AND `patron_id` = $patron_id"; 
+	$result = mysqli->query($check_for_hold_query);
+	
+	if($temp = check_sql_error($result))
+	{
+		return $temp;
+	}
+	
+	if($result->fetch_assoc)
+	{	//The book is on hold
+		$query = "DELETE FROM $hold WHERE `mediaitem_id` = $mediaitem_id AND `patron_id` = $patron_id";
+	
+		$result = $mysqli->query($query);
+	}
+	else
+	{
+		return array('error'=>"Book with media item $mediaitem_id and patron id $patron_id combo is not on hold", 'error_code'=>8);
+	}
 }
 
 ?>
