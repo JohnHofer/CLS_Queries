@@ -414,7 +414,7 @@ function check_in($barcode)
 	if($temp = check_sql_error($result))
 		return $temp;
 	
-	if($result->fetch_assoc)
+	if($result->fetch_assoc())
 	{ //The book is checked out, check it in
 		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
