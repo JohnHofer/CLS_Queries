@@ -178,7 +178,7 @@ function add_role($arr)
 	return add_to_table($arr,'role');
 }
 
-function get_book_by_barcode($barcode)
+function get_item_by_barcode($barcode)
 {
 	global $mysqli;
 	
@@ -186,20 +186,36 @@ function get_book_by_barcode($barcode)
 	
 	$result = $mysqli->query($mediaItemIdQuery);
 	
-	if(!$result)
+	$mediaitem_id = 0;
+	
+	if($temp = check_sql_error($result))
 	{
-		// bad things happen \die?
+		return $temp;
 	}
 	else
 	{
-		$row = $result->fetch_assoc();
-		$mediaitem_id = $row['mediaitem_id'];
+		if($row = $result->fetch_assoc())
+		{
+			$mediaitem_id = $row['mediaitem_id'];
+			$pending_result = get_item_by_mediaItem_id($mediaitem_id);
+			
+			foreach($row as $key => $value)
+			{
+				$pending_result[$key] = $value;
+			}
+			
+			return $pending_result;
+		}
 	}
 	
-	return get_book_by_mediaItem_id($mediaitem_id);
+	return array
+			(
+				'error'			=>	'Not found',
+				'error_code'	=> 	1
+			);
 }
 
-function get_book_by_mediaItem_id($mediaitem_id)
+function get_item_by_mediaItem_id($mediaitem_id)
 {
 	global $mysqli;
 
@@ -438,7 +454,7 @@ function check_in($barcode)
 	if($temp = check_sql_error($result))
 		return $temp;
 	
-	if($result->fetch_assoc)
+	if($result->fetch_assoc())
 	{ 	//The book is checked out, check it in
 		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
@@ -480,12 +496,15 @@ function place_hold($mediaitem_id,$patron_id)
 			$time_placed 		= new DateTime();
 			$date->add(DateInterval::createFromDateString("3 days"));
 			
+			$string1 = $time_placed->format('Y-m-d');
+			$string2 = $date->format('Y-m-d');
+			
 			$arr = array
 					(
 						'patron_id'			=>	$patron_id, 
 						'mediaitem_id'		=>	$mediaitem_id,
-						'time_placed'		=>	$time_placed->format('Y-m-d'),
-						'expiration_date'	=>	$date->format('Y-m-d')
+						'time_placed'		=>	$string1,
+						'expiration_date'	=>	$string2
 					);
 			
 			return add_hold($arr);
