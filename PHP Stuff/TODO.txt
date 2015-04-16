@@ -1,0 +1,3 @@
+-Check/finish the append_required_fields function in Helpers.php
+-Add a check for fine to the check_out function for Patrons
+-Write get functions for various fields
