@@ -450,6 +450,7 @@ function check_out($barcode,$patron_id)
 	}
 }
 
+//	needed implementation : is overdue -> make fine
 function check_in($barcode)
 {
 	global $mysqli;
