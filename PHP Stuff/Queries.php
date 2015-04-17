@@ -74,6 +74,41 @@ function get_librarian_permissions($id)
 	return $err;
 }
 
+function get_hardcopy_by_barcode($barcode)
+{
+	$check_for_item_query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	$item_result = $mysqli->query($check_for_item_query);
+	if(check_sql_error($item_result))
+		return FALSE;
+	if($item = $item_result->fetch_assoc())
+		return $item;
+	return FALSE;
+}
+
+function get_checkouts_by_patron_id($id)
+{
+	global $mysqli;
+	$checkout_result = $mysqli->query("SELECT * FROM `checkedout` WHERE `patron_id` = $patron_id");
+	if(check_sql_error($query))
+		return FALSE;
+	$checkout_list = array();
+	while($checkout_list[] = $checkout_result->fetch_assoc());
+	return checkout_list;
+}
+
+function get_patron_by_id($id)
+{
+	global $mysqli;
+	$patron_result = $mysqli->query("SELECT `id`, `username`, `first`,
+								`last`, `email`, `phone`, `checkout_limit`,
+								`renew_limit` FROM `patron` WHERE `id`=$id");
+	if(check_sql_error($patron_result))
+		return FALSE;
+	if($patron = $patron_result->fetch_assoc())
+		return $patron;
+	return FALSE;
+}
+
 function add_to_table($arr,$tablename)
 {
 	global $mysqli;
@@ -178,7 +213,7 @@ function add_role($arr)
 	return add_to_table($arr,'role');
 }
 
-function get_item_by_barcode($barcode)
+function get_mediaitem_by_barcode($barcode)
 {
 	global $mysqli;
 	
@@ -370,76 +405,48 @@ function check_out($barcode,$patron_id)
 	clean_string($barcode);
 	clean_string($patron_id);
 	
-	//Query for the hardcopy
-	$check_for_item_query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
+	$item = get_hardcopy_by_barcode($barcode);
+	if(!$item)
+		return array('error'=>'barcode not found', 'error_code'=>4);
+	$patron = get_patron_by_id($patron_id);
+	if(!$patron)
+		return array('error'=>'id not found', 'error_code'=>3);
 	
-	$item_result = $mysqli->query($check_for_item_query);
-	
-	if($temp = check_sql_error($item_result))
+	$checkout_duration	= $item['checkout_duration'];
+	$renew_limit 		= $item['renew_limit'];
+		
+	//If checkout_duration or renew_count = 0, this mediaitem cannot be checked out
+	if($checkout_duration === 0 || $renew_limit === 0)
 	{
-		return $temp;
+		return array(
+					'error'			=>	'mediaitem cannot be checked out of library',
+					'error_code'	=>	5
+				);
 	}
+	
+	$checkout_list = get_checkouts_by_patron_id($patron_id);
+	if(!$checkout_list)
+		return array('error'=>'unknown error','error_code'=>-1);
 		
-	//Query for the patron
-	$check_for_patron_query = "SELECT * FROM `patron` WHERE `id` = $patron_id";
-	
-	$patron_result = $mysqli->query($check_for_patron_query);	
-	
-	if($temp = check_sql_error($patron_result))
+	if($checkout_list.size() < $patron['checkout_limit'] )		//Go ahead and checkout the mediaitem!
 	{
-		return $temp;
+		$date = new DateTime();
+		$date->add(DateInterval::createFromDateString("$checkout_duration days"));
+
+		$arr = array
+				(
+					'patron_id'			=>	$patron_id, 
+					'hardcopy_barcode'	=>	$barcode,
+					'due_date'			=>	$date->format('Y-m-d'), 
+					'renew_count'		=>	0
+				);
+
+		return add_checkedout($arr);
 	}
-	
-	if($item = $item_result->fetch_assoc())		//The mediaitem is exists. Check it out.
-	{ 
-		$checkout_duration	= $item['checkout_duration'];
-		$renew_limit 		= $item['renew_limit'];
-		
-		//If checkout_duration or renew_count = 0, this mediaitem cannot be checked out
-		if($checkout_duration === 0 || $renew_limit === 0)
-		{
-			return array
-					(
-						'error'			=>	'mediaitem cannot be checked out of library',
-						'error_code'	=>	5
-					);
-		}
-		
-		if($patron = $patron_result->fetch_assoc())		//The patron exists. Have they exceeded checkout limit?
-		{ 
-			$checkout_list = $mysqli->query("SELECT * FROM `checkedout` WHERE `patron_id` = $patron_id");
-			
-			if($temp = check_sql_error($checkout_list))
-			{
-				return $temp;
-			}
-			if($checkout_list->num_rows < $patron['checkout_limit'] )		//Go ahead and checkout the mediaitem!
-			{
-				$date = new DateTime();
-				$date->add(DateInterval::createFromDateString("$checkout_duration days"));
-				
-				$arr = array
-						(
-							'patron_id'			=>	$patron_id, 
-							'hardcopy_barcode'	=>	$barcode,
-							'due_date'			=>	$date->format('Y-m-d'), 
-							'renew_count'		=>	0
-						);
-						
-				return add_checkedout($arr);
-			}
-			else
-			{
-				return array('error'=>'Checkout limit exceeded', 'error_code'=>7);
-			}
-		}
-		else
-		{
-			return array('error'=>'The patron could not be found', 'error_code'=>6);
-		}
+	else
+	{
+		return array('error'=>'Checkout limit exceeded', 'error_code'=>7);
 	}
-	
-	return array('error'=>"No such mediaitem exists", 'error_code'=>4);
 }
 
 function check_in($barcode)
@@ -459,7 +466,7 @@ function check_in($barcode)
 		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
 	
-	return array('error'=>"mediaitem with barcode $barcode is not checked out", 'error_code'=>4);
+	return array('error'=>"item not checked out", 'error_code'=>9);
 }
 
 

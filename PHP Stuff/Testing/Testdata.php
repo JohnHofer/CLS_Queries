@@ -4,7 +4,7 @@
 			'title'			=>	'The Hunger Games',
 			'year'			=>	'2010',
 			'isbn'			=>	'24234256',
-			'media_type'	=>	'mediaitem'
+			'media_type'	=>	'Book'
 		);
 	$mediaitem2 = array
 		(
@@ -15,7 +15,7 @@
 		(
 			'year'			=>	'2014',
 			'isbn'			=>	'213457',
-			'media_type'	=>	'mediaitem'
+			'media_type'	=>	'Book'
 		);
 
 	// A template for all these.
@@ -73,7 +73,7 @@
 					'title' 		=> 'The Hunger Games', 
 					'year' 			=> '2010',
 					'isbn' 			=> '24234256',
-					'media_type' 	=> 'mediaitem'
+					'media_type' 	=> 'Book'
 				)
 			), 
 			array
@@ -103,7 +103,7 @@
 				(
 					'year' 			=> '2014',
 					'isbn' 			=> '213457',
-					'media_type' 	=> 'mediaitem'
+					'media_type' 	=> 'Book'
 				)
 			), 
 			array
@@ -249,10 +249,10 @@
 				array
 				(
 					'id' 			=> 	1,
-					'title' 		=> 	'The mediaitem of Mormon',
+					'title' 		=> 	'The Book of Mormon',
 					'year' 			=> 	1900,
 					'isbn' 			=> 	0,
-					'media_type'	=> 	'mediaitem',
+					'media_type'	=> 	'Book',
 					'edition' 		=> 	'',
 					'volume' 		=> 	'',
 					'issue_no' 		=> 	'',
@@ -317,10 +317,10 @@
 				array
 				(
 					'id' 			=> 	1,
-					'title' 		=> 	'The mediaitem of Mormon',
+					'title' 		=> 	'The Book of Mormon',
 					'year' 			=> 	1900,
 					'isbn' 			=> 	0,
-					'media_type'	=> 	'mediaitem',
+					'media_type'	=> 	'Book',
 					'edition' 		=> 	'',
 					'volume' 		=> 	'',
 					'issue_no' 		=> 	'',
@@ -443,8 +443,8 @@
 				), 
 				array
 				(
-					'error' 		=> 'No such barcode exists in database',
-					'error_code' 	=> 'Decide on this'
+					'error' 		=> 'item not checked out',
+					'error_code' 	=> 9
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair

@@ -27,6 +27,10 @@ require_once "Testdata.php";
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	//Clear database and repopulate it
+	//goodbye_world();
+	//hello_world();
+
 	functionTestBlock(standard_login_IEO_pairs(), 'login');
 	
 	functionTestBlock(standard_add_mediaitem_IEO_pairs(), 'add_mediaitem');
