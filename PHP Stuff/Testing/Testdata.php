@@ -443,8 +443,8 @@
 				), 
 				array
 				(
-					'error' 		=> 'item not checked out',
-					'error_code' 	=> 9
+					'error' 		=> 'barcode not found',
+					'error_code' 	=> 4
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
