@@ -76,6 +76,7 @@ function get_librarian_permissions($id)
 
 function get_hardcopy_by_barcode($barcode)
 {
+	global $mysqli;
 	$check_for_item_query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
 	$item_result = $mysqli->query($check_for_item_query);
 	if(check_sql_error($item_result))
@@ -88,12 +89,12 @@ function get_hardcopy_by_barcode($barcode)
 function get_checkouts_by_patron_id($id)
 {
 	global $mysqli;
-	$checkout_result = $mysqli->query("SELECT * FROM `checkedout` WHERE `patron_id` = $patron_id");
-	if(check_sql_error($query))
+	$checkout_result = $mysqli->query("SELECT * FROM `checkedout` WHERE `patron_id` = $id");
+	if(check_sql_error($checkout_result))
 		return FALSE;
 	$checkout_list = array();
 	while($checkout_list[] = $checkout_result->fetch_assoc());
-	return checkout_list;
+	return $checkout_list;
 }
 
 function get_patron_by_id($id)
@@ -232,7 +233,7 @@ function get_mediaitem_by_barcode($barcode)
 		if($row = $result->fetch_assoc())
 		{
 			$mediaitem_id = $row['mediaitem_id'];
-			$pending_result = get_item_by_mediaItem_id($mediaitem_id);
+			$pending_result = get_mediaitem_by_mediaitem_id($mediaitem_id);
 			
 			foreach($row as $key => $value)
 			{
@@ -250,7 +251,7 @@ function get_mediaitem_by_barcode($barcode)
 			);
 }
 
-function get_item_by_mediaItem_id($mediaitem_id)
+function get_mediaitem_by_mediaitem_id($mediaitem_id)
 {
 	global $mysqli;
 
@@ -428,7 +429,7 @@ function check_out($barcode,$patron_id)
 	if(!$checkout_list)
 		return array('error'=>'unknown error','error_code'=>-1);
 		
-	if($checkout_list.size() < $patron['checkout_limit'] )		//Go ahead and checkout the mediaitem!
+	if(sizeof($checkout_list) < $patron['checkout_limit'] )		//Go ahead and checkout the mediaitem!
 	{
 		$date = new DateTime();
 		$date->add(DateInterval::createFromDateString("$checkout_duration days"));
@@ -463,7 +464,7 @@ function check_in($barcode)
 	
 	if($result->fetch_assoc())
 	{ 	//The mediaitem is checked out, check it in
-		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
+		return delete_from_table('hardcopy_barcode',$barcode,'checkedout');
 	}
 	
 	return array('error'=>"item not checked out", 'error_code'=>9);

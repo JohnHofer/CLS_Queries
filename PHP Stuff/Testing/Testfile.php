@@ -37,9 +37,9 @@ require_once "Testdata.php";
 	
 	functionTestBlock(standard_get_user_by_id_IEO_pairs(), 'get_user_by_id');
 	
-	functionTestBlock(standard_get_mediaitem_by_mediaItem_id_IEO_pairs(), 'get_item_by_mediaItem_id');
+	functionTestBlock(standard_get_mediaitem_by_mediaItem_id_IEO_pairs(), 'get_mediaitem_by_mediaitem_id');
 	
-	functionTestBlock(standard_get_mediaitem_by_barcode_IEO_pairs(), 'get_item_by_barcode');
+	functionTestBlock(standard_get_mediaitem_by_barcode_IEO_pairs(), 'get_mediaitem_by_barcode');
 	
 	functionTestBlock(standard_delete_from_admin_IEO_pairs(), 'delete_from_admin');
 	

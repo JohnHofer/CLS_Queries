@@ -485,7 +485,7 @@
 				), 
 				array
 				(
-					'error' 		=> 'No such mediaitem exists',
+					'error' 		=> 'barcode not found',
 					'error_code' 	=> 4
 				)
 			);
