@@ -492,7 +492,7 @@
 			
 		return $input_expected_output_pairs;
 	}
-	
+
 	function standard_remove_hold_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
@@ -583,17 +583,4 @@
 			
 		return $input_expected_output_pairs;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 ?>
