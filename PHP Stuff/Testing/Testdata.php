@@ -1,21 +1,21 @@
 <?php
-	$book1 = array
+	$mediaitem1 = array
 		(
 			'title'			=>	'The Hunger Games',
 			'year'			=>	'2010',
 			'isbn'			=>	'24234256',
-			'media_type'	=>	'book'
+			'media_type'	=>	'mediaitem'
 		);
-	$book2 = array
+	$mediaitem2 = array
 		(
 			'title'			=>	'The Bible',
 			'year'			=>	'0'
 		);
-	$book3 = array
+	$mediaitem3 = array
 		(
 			'year'			=>	'2014',
 			'isbn'			=>	'213457',
-			'media_type'	=>	'book'
+			'media_type'	=>	'mediaitem'
 		);
 
 	// A template for all these.
@@ -73,7 +73,7 @@
 					'title' 		=> 'The Hunger Games', 
 					'year' 			=> '2010',
 					'isbn' 			=> '24234256',
-					'media_type' 	=> 'book'
+					'media_type' 	=> 'mediaitem'
 				)
 			), 
 			array
@@ -103,7 +103,7 @@
 				(
 					'year' 			=> '2014',
 					'isbn' 			=> '213457',
-					'media_type' 	=> 'book'
+					'media_type' 	=> 'mediaitem'
 				)
 			), 
 			array
@@ -225,7 +225,7 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_get_book_by_mediaItem_id_IEO_pairs()
+	function standard_get_mediaitem_by_mediaItem_id_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -249,10 +249,10 @@
 				array
 				(
 					'id' 			=> 	1,
-					'title' 		=> 	'The Book of Mormon',
+					'title' 		=> 	'The mediaitem of Mormon',
 					'year' 			=> 	1900,
 					'isbn' 			=> 	0,
-					'media_type'	=> 	'Book',
+					'media_type'	=> 	'mediaitem',
 					'edition' 		=> 	'',
 					'volume' 		=> 	'',
 					'issue_no' 		=> 	'',
@@ -293,7 +293,7 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_get_book_by_barcode_IEO_pairs()
+	function standard_get_mediaitem_by_barcode_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -317,10 +317,10 @@
 				array
 				(
 					'id' 			=> 	1,
-					'title' 		=> 	'The Book of Mormon',
+					'title' 		=> 	'The mediaitem of Mormon',
 					'year' 			=> 	1900,
 					'isbn' 			=> 	0,
-					'media_type'	=> 	'Book',
+					'media_type'	=> 	'mediaitem',
 					'edition' 		=> 	'',
 					'volume' 		=> 	'',
 					'issue_no' 		=> 	'',
@@ -485,7 +485,7 @@
 				), 
 				array
 				(
-					'error' 		=> 'No such book exists',
+					'error' 		=> 'No such mediaitem exists',
 					'error_code' 	=> 4
 				)
 			);

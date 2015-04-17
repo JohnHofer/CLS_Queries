@@ -59,8 +59,8 @@ function login($username, $password, $table)
 function get_librarian_permissions($id)
 {
 	global $mysqli;
-	$result = $mysqli->query("SELECT `id`, `check_in`, `check_out`, `add_book`,
-		`remove_book`, `add_patron`, `remove_patron`, `manage_accounts`,
+	$result = $mysqli->query("SELECT `id`, `check_in`, `check_out`, `add_mediaitem`,
+		`remove_mediaitem`, `add_patron`, `remove_patron`, `manage_accounts`,
 		`pay_fines`, `extend_due_date`, `waive_fines`, `edit_media_entry`,
 		`add_tag` FROM `librarian` WHERE `id`=$id");
 
@@ -390,30 +390,30 @@ function check_out($barcode,$patron_id)
 		return $temp;
 	}
 	
-	if($item = $item_result->fetch_assoc())		//The book is exists. Check it out.
+	if($item = $item_result->fetch_assoc())		//The mediaitem is exists. Check it out.
 	{ 
 		$checkout_duration	= $item['checkout_duration'];
-		$renew_count 		= $item['renew_count'];
+		$renew_limit 		= $item['renew_limit'];
 		
-		//If checkout_duration or renew_count = 0, this book cannot be checked out
-		if($checkout_duration === 0 || $renew_count === 0)
+		//If checkout_duration or renew_count = 0, this mediaitem cannot be checked out
+		if($checkout_duration === 0 || $renew_limit === 0)
 		{
 			return array
 					(
-						'error'			=>	'Book cannot be checked out of library',
+						'error'			=>	'mediaitem cannot be checked out of library',
 						'error_code'	=>	5
 					);
 		}
 		
 		if($patron = $patron_result->fetch_assoc())		//The patron exists. Have they exceeded checkout limit?
 		{ 
-			$checkout_list = $mysqli->query("SELECT * FROM `checkedout` WHERE `id` = $patron_id");
+			$checkout_list = $mysqli->query("SELECT * FROM `checkedout` WHERE `patron_id` = $patron_id");
 			
 			if($temp = check_sql_error($checkout_list))
 			{
 				return $temp;
 			}
-			if($checkout_list->num_rows < $patron['checkout_limit'] )		//Go ahead and checkout the book!
+			if($checkout_list->num_rows < $patron['checkout_limit'] )		//Go ahead and checkout the mediaitem!
 			{
 				$date = new DateTime();
 				$date->add(DateInterval::createFromDateString("$checkout_duration days"));
@@ -423,7 +423,7 @@ function check_out($barcode,$patron_id)
 							'patron_id'			=>	$patron_id, 
 							'hardcopy_barcode'	=>	$barcode,
 							'due_date'			=>	$date->format('Y-m-d'), 
-							'renew_count'		=>	$renew_count
+							'renew_count'		=>	0
 						);
 						
 				return add_checkedout($arr);
@@ -439,7 +439,7 @@ function check_out($barcode,$patron_id)
 		}
 	}
 	
-	return array('error'=>"No such book exists", 'error_code'=>4);
+	return array('error'=>"No such mediaitem exists", 'error_code'=>4);
 }
 
 function check_in($barcode)
@@ -455,11 +455,11 @@ function check_in($barcode)
 		return $temp;
 	
 	if($result->fetch_assoc())
-	{ 	//The book is checked out, check it in
+	{ 	//The mediaitem is checked out, check it in
 		return delete_from_table('hardcopy_barcode',$barcode,'checked_out');
 	}
 	
-	return array('error'=>"Book with barcode $barcode is not checked out", 'error_code'=>4);
+	return array('error'=>"mediaitem with barcode $barcode is not checked out", 'error_code'=>4);
 }
 
 
@@ -538,7 +538,7 @@ function remove_hold($mediaitem_id, $patron_id)
 	}
 	
 	if($result->fetch_assoc())
-	{	//The book is on hold
+	{	//The mediaitem is on hold
 		$query = "DELETE FROM `hold` WHERE `mediaitem_id` = $mediaitem_id AND `patron_id` = $patron_id";
 	
 		$result = $mysqli->query($query);
