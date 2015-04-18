@@ -79,10 +79,6 @@ function add_item($arr)
 	$contributors = $arr['contributor']; //contributors array
 	$description = $arr['role']; //
 	$tags = $arr['tag'];
-
-	$description = clean_string($arr['description']);
-	$name = clean_string($arr['name']); //tag
-	$type = clean_string($arr['type']); //tag
 		
 	$copy_number = 1;
 		
