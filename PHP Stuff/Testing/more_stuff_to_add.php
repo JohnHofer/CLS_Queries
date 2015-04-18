@@ -66,11 +66,27 @@ function place_hold($mediaitem_id,$patron_id)
 		return array('error'=>"No such item exists", 'error_code'=>4);
 }
 
-function add_item($arr)//barcode, title, year, media_type, edition, volume, issue_no already, contributors, role, tags
+function add_item($arr)
 {	
+	$title = clean_string($arr['title']); //mediaitem
+	$year = clean_string($arr['year']); //mediaitem
+	$media_type = clean_string($arr['media_type']); //mediaitem
+	$isbn = clean_string($arr['isbn']); //mediaitem
+	$edition = clean_string($arr['edition']); //mediaitem
+	$volume = clean_string($arr['volume']); //mediaitem
+	$issue_no = clean_string($arr['issue_no']); //mediaitem
+	$barcode = clean_string($arr['barcode']); //mediaitem
+	$contributors = $arr['contributor']; //contributors array
+	$description = $arr['role']; //
+	$tags = $arr['tag'];
+
+	$description = clean_string($arr['description']);
+	$name = clean_string($arr['name']); //tag
+	$type = clean_string($arr['type']); //tag
+		
 	$copy_number = 1;
-	
-	$query = "SELECT * FROM `hardcopy` WHERE `barcode` = $arr['barcode']";
+		
+	$query = "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
 	$result = $mysqli->query($query);
 	
 	if($temp = check_sql_error($result))
@@ -78,46 +94,174 @@ function add_item($arr)//barcode, title, year, media_type, edition, volume, issu
 		
 	if($item = $result->fetch_assoc())	//barcode already in hardcopy
 	{
-		return array('error'=>"Barcode $barcode is already in mediaItem", 'error_code'=>9);
+		return array('error'=>"Barcode $barcode is already in mediaItem", 'error_code'=>10);
 	}
 		
 	//Check for already existing media item 
-	$query = "SELECT * FROM `mediaitem` 
-		WHERE `title` = $arr['title'] AND `year` = $arr['year'] AND `media_type` = $arr['media_type'] 
-			AND `edition` = $arr['edition'] AND `volume` = $arr['volume'] AND `issue_no` = $arr['issue_no']";
+	$query = "SELECT `id` FROM `mediaitem` 
+		WHERE `title` = $title AND `year` = $year AND `media_type` = $media_type 
+			AND `edition` = $edition AND `volume` = $volume AND `issue_no` = $issue_no";
+		
 	$result = $mysqli->query($query);
-	
+		
 	if($temp = check_sql_error($result))
 		return $temp;
 		
-	if($result->fetch_assoc())	//The media item already exists
+	if($row = $result->fetch_assoc())	//The media item already exists
 	{	
-		//$copy_number = how many already exist
+		$mediaitem_id = $row['id'];
+		$query = "SELECT COUNT(*) AS count FROM `hardcopy` WHERE `mediaitem_id` = $mediaitem_id"
+		$result = $mysqli->query($query);
+		
+		if($temp = check_sql_error($result))
+			return $temp;
+		
+		if($row = $result->fetch_assoc())
+			$copy_no = $row['count'] + 1;
 	}
 	else	
+	{
 		//add new mediaitem
-		//add contributor
-		//add role
-		//add contribution
-		//add tags
-		//add itemtag
-		
-	//add hardcopy 
-	
-	//$arr = array( These values need to be changed:
-						//'barcode'			  =>	$barcode, 
-						//'mediaitem_id'	  =>	$mediaitem_id,
-						//'copy_no'		      =>	$copy_no,
-						//'call_no'	          =>	$call_no,
-						//'status'	          =>	$status,
-						//'checkout_duration' =>	$checkout_duration
+		$arr = array(
+						'title'		 =>	$title, 
+						'year'	     =>	$year,
+						'isbn'		 =>	$isbn,
+						'media_type' =>	$media_type,
+						'edition'	 =>	$edition,
+						'volume'     =>	$volume,
+						'issue_no'   => $issue_no
 						
 				);
+		add_mediaitem($arr);
+		//get id
+		$query = "SELECT `id` FROM `media_item` WHERE `title` = $title AND `year` = $year AND `media_type` = $media_type 
+			AND `edition` = $edition AND `volume` = $volume AND `issue_no` = $issue_no";
+		$result = $mysqli->query($query);
+				
+		if($temp = check_sql_error($result))
+			return $temp;
+				
+		if($row = $result->fetch_assoc())
+			$mediaitem_id = $row['id'];
 			
-			return add_hardcopy($arr);
+		//for each contributor
+			//check if contributor already exists
+			$query = "SELECT `id` FROM `contributor` WHERE `first` = $first AND `last` = $last";
+			$result = $mysqli->query($query);
+			
+			if($temp = check_sql_error($result))
+				return $temp;
+			
+			if($row = $result->fetch_assoc())//contributor already exists
+			$contributor_id = $row['id'];
+			
+			else //add contributor
+			{
+				$arr = array(
+								'first'		 =>	$first, 
+								'last'	     =>	$last
+						);
+				add_contributor($arr);
+				//get id
+				$query = "SELECT `id` FROM `contributor` WHERE `first` = $first AND `last` = $last";
+				$result = $mysqli->query($query);
+				
+				if($temp = check_sql_error($result))
+					return $temp;
+				
+				if($row = $result->fetch_assoc())
+					$contributor_id = $row['id'];
+			}
+		
+			//check if role already exists
+			$query = "SELECT `id` FROM `role` WHERE `description` = $description";
+			$result = $mysqli->query($query);
+			
+			if($temp = check_sql_error($result))
+				return $temp;
+				
+			if($row = $result->fetch_assoc()) //role already exists
+				$row_id = $row['id'];
+			
+			else //add role
+			{
+				$arr = array(
+								'description'		 =>	$description 
+						);
+				add_role($arr);
+				//get id
+				$query = "SELECT `id` FROM `role` WHERE ``description` = $description";
+				$result = $mysqli->query($query);
+				
+				if($temp = check_sql_error($result))
+					return $temp;
+				
+				if($row = $result->fetch_assoc())
+					$role_id = $row['id'];
+			}
+			
+			//add contribution
+			$arr = array(
+							'mediaitem_id'		 =>	$mediaitem_id, 
+							'role_id'	    	 =>	$role_id,
+							'contributor_id'	 =>	$contributor_id
+					);
+			add_contribution($arr);
+			
+			//add tags
+			//for each tag
+			//{
+				//check if it already exists
+				$query = "SELECT `id` FROM `tag` WHERE `name` = $name";
+			$result = $mysqli->query($query);
+			
+			if($temp = check_sql_error($result))
+				return $temp;
+				
+			if($row = $result->fetch_assoc()) //role already exists
+				$row_id = $row['id'];
+				//$name = 
+				//$type = 
+				$arr = array(
+								'name'		 =>	$name, 
+								'type'	     =>	$type
+								
+						);
+			//end for
+			
+			add_tag($arr);
+		
+			//add itemtag
+			//tag_id =
+			//already have mediaitem_id
+			$arr = array(
+							'tag_id'		 =>	$tag_id, 
+							'mediaitem_id'	 =>	$mediaitem_id
+					);
+			add_itemtag($arr);
+		//}
+	}
+		
+	//add hardcopy 
+	//$mediaitem_id 
+	//$call_no =
+	//$status = 
+	//$checkout_duration =
+	//$renew_limit =
 	
+	$arr = array(
+						'barcode'		    =>	$barcode, 
+						'mediaitem_id'		=>	$mediaitem_id
+						'copy_no'		    =>	$copy_no,
+						'call_no'	        =>	$call_no,
+						'status'	        =>	$status,
+						'checkout_duration' =>	$checkout_duration,
+						'renew_limit'       =>  $renew_limit
+				);
+			
+	add_hardcopy($arr);
 	
-
+	return array();
 }
 
 ?>
