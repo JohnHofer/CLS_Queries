@@ -18,6 +18,7 @@
 			'media_type'	=>	'Book'
 		);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// A template for all these.
 	function standard__IEO_pairs()
 	{
@@ -60,61 +61,11 @@
 			
 		return $input_expected_output_pairs;
 	}
-		
-	function standard_add_mediaitem_IEO_pairs()
-	{
-		$input_expected_output_pairs = array();
-		$input_expected_output_pairs[] = generate_IEO_pair
-		(	
-			array
-			(	
-				array
-				(
-					'title' 		=> 'The Hunger Games', 
-					'year' 			=> '2010',
-					'isbn' 			=> '24234256',
-					'media_type' 	=> 'Book'
-				)
-			), 
-			array
-			() 
-		);
-		$input_expected_output_pairs[] = generate_IEO_pair
-		(	
-			array
-			(	
-				array
-				(
-					'title'	=> 'The Bible',
-					'year' 	=> '0'
-				)
-			), 
-			array
-			(
-				'error' 		=> 'Column \'media_type\' cannot be null', 
-				'error_code' 	=> 0
-			)
-		);
-		$input_expected_output_pairs[] = generate_IEO_pair
-		(
-			array
-			(
-				array
-				(
-					'year' 			=> '2014',
-					'isbn' 			=> '213457',
-					'media_type' 	=> 'Book'
-				)
-			), 
-			array
-			(
-				'error' 		=> 'Column \'title\' cannot be null',
-				'error_code' 	=> 0
-			)
-		);
-		
-		return $input_expected_output_pairs;
-	}
+	
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Queries.php	
 	
 	function standard_login_IEO_pairs()
 	{
@@ -178,54 +129,9 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_get_user_by_id_IEO_pairs()
-	{
-		$input_expected_output_pairs = array();
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					1
-				), 
-				array
-				(
-					'first' 			=> 	'Barrack',
-					'last' 				=> 	'Obama',
-					'email'				=>	"",
-					'phone'				=>	"",
-					'checkout_limit' 	=> 	3,
-					'renew_limit' 		=> 	3
-				)
-			);
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					0
-				), 
-				array
-				(
-					'error' => 'Bad user id',
-					'error_code' => 3
-				)
-			);
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					2
-				), 
-				array
-				(
-					'error' => 'Bad user id',
-					'error_code' => 3
-				)
-			);
-			
-		return $input_expected_output_pairs;
-	}
+	// get_librarian_permissions
 	
-	function standard_get_mediaitem_by_mediaItem_id_IEO_pairs()
+	function standard_get_general_item_info_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -293,7 +199,7 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_get_mediaitem_by_barcode_IEO_pairs()
+	function standard_get_copy_info_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -357,7 +263,7 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_delete_from_admin_IEO_pairs()
+	function standard_get_user_by_id_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -368,7 +274,36 @@
 				), 
 				array
 				(
-					
+					'first' 			=> 	'Barrack',
+					'last' 				=> 	'Obama',
+					'email'				=>	"",
+					'phone'				=>	"",
+					'checkout_limit' 	=> 	3,
+					'renew_limit' 		=> 	3
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					0
+				), 
+				array
+				(
+					'error' => 'Bad user id',
+					'error_code' => 3
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2
+				), 
+				array
+				(
+					'error' => 'Bad user id',
+					'error_code' => 3
 				)
 			);
 			
@@ -432,36 +367,6 @@
 		return $input_expected_output_pairs;
 	}
 	
-	function standard_check_in_IEO_pairs()
-	{
-		$input_expected_output_pairs = array();
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					0
-				), 
-				array
-				(
-					'error' 		=> 'item not checked out',
-					'error_code' 	=> 9
-				)
-			);
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					1
-				), 
-				array
-				(
-					
-				)
-			);
-			
-		return $input_expected_output_pairs;
-	}
-	
 	function standard_check_out_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
@@ -492,28 +397,26 @@
 			
 		return $input_expected_output_pairs;
 	}
-	
-	function standard_remove_hold_IEO_pairs()
+
+	function standard_check_in_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
 			(	
 				array
 				(
-					0,
-					1
+					0
 				), 
 				array
 				(
-					'error' 	=> 'Not found',
-					'error_code' 	=> 1
+					'error' 		=> 'barcode not found',
+					'error_code' 	=> 4
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
 			(	
 				array
 				(
-					1,
 					1
 				), 
 				array
@@ -521,23 +424,9 @@
 					
 				)
 			);
-		$input_expected_output_pairs[] = generate_IEO_pair
-			(	
-				array
-				(
-					2,
-					1
-				), 
-				array
-				(
-					'error' 	=> 'Not found',
-					'error_code'	=> 1
-				)
-			);
 			
 		return $input_expected_output_pairs;
 	}
-	
 	
 	function standard_place_hold_IEO_pairs()
 	{
@@ -583,17 +472,192 @@
 			
 		return $input_expected_output_pairs;
 	}
+
+	function standard_remove_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					0,
+					1
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_code' 	=> 1
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1,
+					1
+				), 
+				array
+				(
+					
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2,
+					1
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_code'	=> 1
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
 	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Adders.php
+
+	function standard_add_mediaitem_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'title' 		=> 'The Hunger Games', 
+					'year' 			=> '2010',
+					'isbn' 			=> '24234256',
+					'media_type' 	=> 'Book'
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'title'	=> 'The Bible',
+					'year' 	=> '0'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'media_type\' cannot be null', 
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'year' 			=> '2014',
+					'isbn' 			=> '213457',
+					'media_type' 	=> 'Book'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'title\' cannot be null',
+				'error_code' 	=> 0
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
 	
+	function standard_add_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 1,
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 2,
+					'mediaitem_id' 		=> 1,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			()
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 0,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Not found',
+				'error_code' 	=> 1
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Getters.php
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Removers.php
+
+	function standard_delete_from_admin_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1
+				), 
+				array
+				(
+					
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
