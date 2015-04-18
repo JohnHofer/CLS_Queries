@@ -580,15 +580,61 @@
 			(	
 				array
 				(
-					0
+					array
+					(
+						'title' 		=> 	'Test',
+						'year' 			=> 	100,
+						'isbn' 			=> 	0,
+						'media_type'	=> 	'Book',
+						'edition' 		=> 	'',
+						'volume' 		=> 	'',
+						'issue_no' 		=> 	'',
+						'tag' => Array
+							(
+								0 => 'Stupid',
+								1 => 'Religous',
+								2 => 'Other'
+							),
+
+						'contributor' => Array
+							(
+								'Author' => Array
+									(
+										0 => Array
+											(
+												'first'	=> 'Jesus',
+												'last' 	=> 'Christ'
+											),
+										1 => Array
+											(
+												'first'	=> 'Michael',
+												'last' 	=> 'Bay'
+											)
+
+									),
+								'Producer' => Array
+									(
+										0 => Array
+											(
+												'first' => 'Santa',
+												'last'  => 'Claus'
+											)
+									)
+							),
+						
+						'barcode' 			=> 654321,
+						'copy_no' 			=> 1,
+						'call_no' 			=> '',
+						'status' 			=> 'Normal',
+						'checkout_duration' => 0,
+						'renew_limit' 		=> 1,
+					)
 				), 
 				array
 				(
-					'error' 	=> 'Not found',
-					'error_code' 	=> 1
 				)
 			);
-		$input_expected_output_pairs[] = generate_IEO_pair
+		/*$input_expected_output_pairs[] = generate_IEO_pair
 			(	
 				array
 				(
@@ -611,7 +657,7 @@
 					'error_code'	=> 1
 				)
 			);
-			
+		*/
 		return $input_expected_output_pairs;
 	}
 	

@@ -46,7 +46,7 @@ require_once "Testdata.php";
 //	functionTestBlock(	standard_check_in_IEO_pairs(), 					'check_in');
 //	functionTestBlock(	standard_place_hold_IEO_pairs(), 				'place_hold');
 //	functionTestBlock(	standard_remove_hold_IEO_pairs(), 				'remove_hold');
-//	functionTestBlock(	standard_add_item_IEO_pairs(), 					'add_item');
+	functionTestBlock(	standard_add_item_IEO_pairs(), 					'add_item');
 
 	
 //	*/
