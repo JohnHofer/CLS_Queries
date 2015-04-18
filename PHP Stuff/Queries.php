@@ -39,7 +39,9 @@ function login($username, $password, $table)
 		}
 		if($row = $result->fetch_assoc())
 		{
-			return $row;
+			$copy = $row;
+			$copy['user_type'] = $table;
+			return $copy;
 		}
 		else //Empty password query
 		{
@@ -61,8 +63,8 @@ function login($username, $password, $table)
 function get_librarian_permissions($id)
 {
 	global $mysqli;
-	$result = $mysqli->query("SELECT `id`, `check_in`, `check_out`, `add_mediaitem`,
-		`remove_mediaitem`, `add_patron`, `remove_patron`, `manage_accounts`,
+	$result = $mysqli->query("SELECT `id`, `check_in`, `check_out`, `add_book`,
+		`remove_book`, `add_patron`, `remove_patron`, `manage_accounts`,
 		`pay_fines`, `extend_due_date`, `waive_fines`, `edit_media_entry`,
 		`add_tag` FROM `librarian` WHERE `id`=$id");
 
@@ -81,10 +83,7 @@ function get_copy_info($barcode)
 	global $mysqli;
 	
 	$mediaItemIdQuery 	= "SELECT * FROM `hardcopy` WHERE `barcode` = $barcode";
-	
 	$result = $mysqli->query($mediaItemIdQuery);
-	
-	$mediaitem_id = 0;
 	
 	if($temp = check_sql_error($result))
 	{
@@ -102,15 +101,35 @@ function get_copy_info($barcode)
 				$pending_result[$key] = $value;
 			}
 			
+			$isCheckedOutQuery 	= "SELECT `due_date`, `renew_count` FROM `checkedout` WHERE `hardcopy_barcode` = $barcode";
+			$result2 = $mysqli->query($isCheckedOutQuery);
+			
+			if($temp2 = check_sql_error($result2))
+			{
+				return $temp2;
+			}
+			else
+			{
+				if($row2 = $result2->fetch_assoc())
+				{
+					foreach($row2 as $key => $value)
+					{
+						$pending_result[$key] = $value;
+					}
+				}
+			}
+	
 			return $pending_result;
 		}
-	}
-	
-	return array
+		else
+		{
+			return array
 			(
 				'error'			=>	'Not found',
 				'error_code'	=> 	1
 			);
+		}
+	}
 }
 
 function get_general_item_info($mediaitem_id)
@@ -384,9 +403,9 @@ function place_hold($mediaitem_id,$patron_id)
 						'expiration_date'	=>	$string2
 					);
 					
-			echo "<pre>";
-			print_r($arr);
-			echo "</pre>";
+//			echo "<pre>";
+//			print_r($arr);
+//			echo "</pre>";
 			
 			return add_hold($arr);
 		}

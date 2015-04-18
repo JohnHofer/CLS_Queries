@@ -34,18 +34,18 @@ require_once "Testdata.php";
 //	
 // Queries.php
 	
-	/*
+//	/*
 	
-//	functionTestBlock(	standard_login_IEO_pairs(), 				'login');
-	// get_librarian_permissions
-//	functionTestBlock(	standard_get_general_item_info_IEO_pairs(), 'get_general_item_info');
-//	functionTestBlock(	standard_get_copy_info_IEO_pairs(), 		'get_copy_info');
-//	functionTestBlock(	standard_get_user_by_id_IEO_pairs(), 		'get_user_by_id');
-//	functionTestBlock(	standard_change_status_IEO_pairs(), 		'change_status');
-//	functionTestBlock(	standard_check_out_IEO_pairs(), 			'check_out');
-//	functionTestBlock(	standard_check_in_IEO_pairs(), 				'check_in');
-	functionTestBlock(	standard_place_hold_IEO_pairs(), 			'place_hold');
-//	functionTestBlock(	standard_remove_hold_IEO_pairs(), 			'remove_hold');
+	functionTestBlock(	standard_login_IEO_pairs(), 					'login');
+//	functionTestBlock(	standard_get_librarian_permissions_IEO_pairs(), 'get_librarian_permissions');
+//	functionTestBlock(	standard_get_general_item_info_IEO_pairs(), 	'get_general_item_info');
+//	functionTestBlock(	standard_get_copy_info_IEO_pairs(), 			'get_copy_info');
+//	functionTestBlock(	standard_get_user_by_id_IEO_pairs(), 			'get_user_by_id');
+//	functionTestBlock(	standard_change_status_IEO_pairs(), 			'change_status');
+//	functionTestBlock(	standard_check_out_IEO_pairs(), 				'check_out');
+//	functionTestBlock(	standard_check_in_IEO_pairs(), 					'check_in');
+//	functionTestBlock(	standard_place_hold_IEO_pairs(), 				'place_hold');
+//	functionTestBlock(	standard_remove_hold_IEO_pairs(), 				'remove_hold');
 	
 //	*/
 	
@@ -53,23 +53,23 @@ require_once "Testdata.php";
 //	
 // Adders.php
 
-///*
+//	/*
 
 	// add_to_table
 	
-	// add_admin
+//	functionTestBlock(standard_add_admin_IEO_pairs(), 		'add_admin');
 	// add_checkedout
 	// add_contribution
 	// add_contributor
 	// add_fine
 	// add_hardcopy
-	functionTestBlock(standard_add_hold_IEO_pairs(), 		'add_hold');
-	// add_itemtag
+//	functionTestBlock(standard_add_hold_IEO_pairs(), 		'add_hold');
+//	functionTestBlock(standard_add_itemtag_IEO_pairs(), 	'add_itemtag');
 	// add_librarian
 //	functionTestBlock(standard_add_mediaitem_IEO_pairs(), 	'add_mediaitem');
 	// add_patron
-	// add_role
-	// add_tag
+//	functionTestBlock(standard_add_role_IEO_pairs(), 		'add_role');
+//	functionTestBlock(standard_add_tag_IEO_pairs(), 		'add_tag');
 	
 //*/
 	

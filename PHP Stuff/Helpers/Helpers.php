@@ -34,8 +34,8 @@ function append_required_fields(&$arr,$tablename)
 	{
 		if(!array_key_exists('username',$arr))
 			$arr['username'] = 'NULL';
-		if(!array_key_exists('password',$arr))
-			$arr['password'] = 'NULL';
+		if(!array_key_exists('password_hash',$arr))
+			$arr['password_hash'] = 'NULL';
 		if(!array_key_exists('salt',$arr))
 			$arr['salt'] = 'NULL';
 	}

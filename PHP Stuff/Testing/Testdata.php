@@ -80,7 +80,8 @@
 				), 
 				array
 				(
-					'id'=> 1
+					'id'		=> 1,
+					'user_type' => 'librarian'
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -129,8 +130,60 @@
 		return $input_expected_output_pairs;
 	}
 	
-	// get_librarian_permissions
-	
+	function standard_get_librarian_permissions_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					0
+				), 
+				array
+				(
+					'error' 		=> 'ID not found',
+					'error_code' 	=> 3
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1		// get_librarian_permissions(1);
+				), 
+				array
+				(
+					'id' 				=>	1,
+					'check_in'	 		=>	1,
+					'check_out' 		=>	1,
+					'add_book'			=>	1,
+					'remove_book' 		=>	1,
+					'add_patron' 		=>	1,
+					'remove_patron' 	=>	1,
+					'manage_accounts'	=>	1,
+					'pay_fines' 		=>	1,
+					'extend_due_date' 	=>	1,
+					'waive_fines' 		=>	1,
+					'edit_media_entry'	=>	1,
+					'add_tag'			=>	1
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2
+				), 
+				array
+				(
+					'error' 		=> 'ID not found',
+					'error_code' 	=> 3
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
+		
 	function standard_get_general_item_info_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
@@ -256,7 +309,9 @@
 					'call_no' 			=> '',
 					'status' 			=> 'Lost',
 					'checkout_duration' => 0,
-					'renew_limit' 		=> 1
+					'renew_limit' 		=> 1,
+					'due_date' 			=> '2015-04-18',
+					'renew_count'		=> 0
 				)
 			);
 			
@@ -522,6 +577,214 @@
 //	
 // Adders.php
 
+	function standard_add_admin_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'username' 		=> 'admin4', 
+					'password_hash'	=> 'password',
+					'salt' 			=> 3,
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'username' 		=> 'admin4', 
+					'password_hash'	=> 'password',
+					'salt' 			=> 3,
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Duplicate entry \'admin4\' for key \'username\'', 
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'username' 		=> 'admin5', 
+					'salt' 			=> 3,
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'password_hash\' cannot be null',
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'password_hash'	=> 'password',
+					'salt' 			=> 3,
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'username\' cannot be null', 
+				'error_code' 	=> 0
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
+
+	function standard_add_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 1,
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 1,
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			(
+				
+			) 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 2,
+					'mediaitem_id' 		=> 1,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			()
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 0,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Not found',
+				'error_code' 	=> 1
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
+
+	function standard_add_itemtag_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'tag_id' 		=> 7,
+					'mediaitem_id' 	=> 1
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(	
+					'tag_id' 		=> 7,
+					'mediaitem_id' 	=> 1
+				)
+			), 
+			array
+			(
+				'error' 		=>	'Duplicate entry \'7-1\' for key \'PRIMARY\'',
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'tag_id' 		=> 0,
+					'mediaitem_id' 	=> 1
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Cannot add or update a child row: a foreign key constraint fails (`cls`.`itemtag`, CONSTRAINT `itemtag_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`))',
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'tag_id' 		=> 1,
+					'mediaitem_id' 	=> 0
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Cannot add or update a child row: a foreign key constraint fails (`cls`.`itemtag`, CONSTRAINT `itemtag_ibfk_2` FOREIGN KEY (`mediaitem_id`) REFERENCES `mediaitem` (`id`))',
+				'error_code' 	=> 0
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
+	
 	function standard_add_mediaitem_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
@@ -576,8 +839,8 @@
 		
 		return $input_expected_output_pairs;
 	}
-	
-	function standard_add_hold_IEO_pairs()
+		
+	function standard_add_role_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -586,9 +849,42 @@
 			(	
 				array
 				(
-					'patron_id' 		=> 1,
-					'mediaitem_id' 		=> 1,
-					'expiration_date' 	=> '2015-04-21'
+					'description' 		=> 'Author'
+				)
+			), 
+			array
+			(
+				'error' 		=>	'Duplicate entry \'Author\' for key \'description\'',
+				'error_code' 	=> 0
+			) 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'description' 			=> 'Director'
+				)
+			), 
+			array
+			()
+		);
+		
+		return $input_expected_output_pairs;
+	}
+	
+	function standard_add_tag_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'name' 		=> 'Stupid',
+					'type' 		=> 'Subject'
 				)
 			), 
 			array
@@ -599,38 +895,51 @@
 			array
 			(	
 				array
-				(
-					'patron_id' 		=> 2,
-					'mediaitem_id' 		=> 1,
-					'time_placed' 		=> '2015-04-18',
-					'expiration_date' 	=> '2015-04-21'
+				(	
+					'name' 		=> 'Stupid',
+					'type' 		=> 'Subject'
 				)
 			), 
 			array
-			()
+			(
+				'error' 		=>	'Duplicate entry \'Stupid\' for key \'name\'',
+				'error_code' 	=> 0
+			)
 		);
 		$input_expected_output_pairs[] = generate_IEO_pair
-		(
+		(	
 			array
-			(
+			(	
 				array
 				(
-					'patron_id' 		=> 1,
-					'mediaitem_id' 		=> 0,
-					'time_placed' 		=> '2015-04-18',
-					'expiration_date' 	=> '2015-04-21'
+					'type' 		=> 'Subject'
 				)
 			), 
 			array
 			(
-				'error' 		=> 'Not found',
-				'error_code' 	=> 1
+				'error' 		=> 'Column \'name\' cannot be null',
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'name' 		=> 'Stupid'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'type\' cannot be null',
+				'error_code' 	=> 0
 			)
 		);
 		
 		return $input_expected_output_pairs;
 	}
-
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	
 // Getters.php
