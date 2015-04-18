@@ -25,33 +25,75 @@ require_once "Testdata.php";
 //	print_r($input_expected_output_pairs);
 //	echo "</pre>";
 	
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Clear database and repopulate it
-	//goodbye_world();
-	//hello_world();
+	//	goodbye_world();
+	//	generate_test_entries();
 
-	functionTestBlock(standard_login_IEO_pairs(), 'login');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Queries.php
 	
+//	/*
+	
+//	functionTestBlock(	standard_login_IEO_pairs(), 				'login');
+	// get_librarian_permissions
+//	functionTestBlock(	standard_get_general_item_info_IEO_pairs(), 'get_general_item_info');
+//	functionTestBlock(	standard_get_copy_info_IEO_pairs(), 		'get_copy_info');
+//	functionTestBlock(	standard_get_user_by_id_IEO_pairs(), 		'get_user_by_id');
+//	functionTestBlock(	standard_change_status_IEO_pairs(), 		'change_status');
+//	functionTestBlock(	standard_check_out_IEO_pairs(), 			'check_out');
+//	functionTestBlock(	standard_check_in_IEO_pairs(), 				'check_in');
+	functionTestBlock(	standard_place_hold_IEO_pairs(), 			'place_hold');
+//	functionTestBlock(	standard_remove_hold_IEO_pairs(), 			'remove_hold');
+	
+//	*/
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Adders.php
+
+///*
+
+	// add_to_table
+	
+	// add_admin
+	// add_checkedout
+	// add_contribution
+	// add_contributor
+	// add_fine
+	// add_hardcopy
+	// add_hold
+	// add_itemtag
+	// add_librarian
 	functionTestBlock(standard_add_mediaitem_IEO_pairs(), 'add_mediaitem');
+	// add_patron
+	// add_role
+	// add_tag
 	
-	functionTestBlock(standard_get_user_by_id_IEO_pairs(), 'get_user_by_id');
+//*/
 	
-	functionTestBlock(standard_get_mediaitem_by_mediaItem_id_IEO_pairs(), 'get_mediaitem_by_mediaitem_id');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Getters.php
+
+	//	get_checkouts_by_patron_id
+	//	get_hardcopy_by_barcode
+	//	***get_patron_by_id
 	
-	functionTestBlock(standard_get_mediaitem_by_barcode_IEO_pairs(), 'get_mediaitem_by_barcode');
-	
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Removers.php
+
+/*
+
+	//	delete_from_table
+
 	functionTestBlock(standard_delete_from_admin_IEO_pairs(), 'delete_from_admin');
 	
-	functionTestBlock(standard_change_status_IEO_pairs(), 'change_status');
-	
-	functionTestBlock(standard_check_in_IEO_pairs(), 'check_in');
-	
-	functionTestBlock(standard_check_out_IEO_pairs(), 'check_out');
-	
-	functionTestBlock(standard_remove_hold_IEO_pairs(), 'remove_hold');
-	
-	functionTestBlock(standard_place_hold_IEO_pairs(), 'place_hold');
+//*/
+
 ?>
 		
 <!--		<fieldset> 	<legend>	check_out()	</legend>

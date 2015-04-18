@@ -1,4 +1,6 @@
 <?php
+require_once "Connect.php";
+
 function clean_string(&$arg)
 {
 	global $mysqli;
