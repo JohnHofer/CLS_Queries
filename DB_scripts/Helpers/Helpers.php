@@ -52,16 +52,18 @@ function append_required_fields(&$arr,$tablename)
 	}
 	if($tablename == 'contribution')
 	{
-		if(!array_key_exists('media_item',$arr))
-			$arr['media_item'] = 'NULL';
+		if(!array_key_exists('mediaitem_id',$arr))
+			$arr['mediaitem_id'] = 'NULL';
 		if(!array_key_exists('contributor_id',$arr))
 			$arr['contributor_id'] = 'NULL';
 		if(!array_key_exists('role_id',$arr))
 			$arr['role_id'] = 'NULL';
 	}
 	if($tablename == 'contributor')
+	{
 		if(!array_key_exists('last',$arr))
 			$arr['last'] = 'NULL';
+	}
 
 	if($tablename == 'fine')
 	{

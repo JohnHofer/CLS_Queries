@@ -573,6 +573,48 @@
 		return $input_expected_output_pairs;
 	}
 	
+	function standard_add_item_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					0
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_code' 	=> 1
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					1
+				), 
+				array
+				(
+					
+				)
+			);
+		$input_expected_output_pairs[] = generate_IEO_pair
+			(	
+				array
+				(
+					2
+				), 
+				array
+				(
+					'error' 	=> 'Not found',
+					'error_code'	=> 1
+				)
+			);
+			
+		return $input_expected_output_pairs;
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	
 // Adders.php
@@ -647,6 +689,163 @@
 		return $input_expected_output_pairs;
 	}
 
+	function standard_add_contribution_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 7,
+					'contributor_id'	=> 1,
+					'mediaitem_id'		=> 1
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 7,
+					'contributor_id'	=> 1,
+					'mediaitem_id'		=> 1
+				)
+			), 
+			array
+			(
+				
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 0,
+					'contributor_id'	=> 1,
+					'mediaitem_id'		=> 1
+				)
+			), 
+			array
+			() 
+		);
+		
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 7,
+					'contributor_id'	=> 0,
+					'mediaitem_id'		=> 1
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 7,
+					'contributor_id'	=> 1,
+					'mediaitem_id'		=> 0
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'role_id' 			=> 0,
+					'contributor_id'	=> 0,
+					'mediaitem_id'		=> 0
+				)
+			), 
+			array
+			() 
+		);
+		
+		return $input_expected_output_pairs;
+	}
+	
+	function standard_add_contributor_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'first' 		=> 'Michael', 
+					'last'			=> 'Bay'
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'first' 		=> 'Michael', 
+					'last'			=> 'Bay'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Duplicate entry \'Michael-Bay\' for key \'first\'', 
+				'error_code' 	=> 0
+			)
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'last'			=> 'Bay'
+				)
+			), 
+			array
+			()
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'first' 		=> 'Michael'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Column \'last\' cannot be null', 
+				'error_code' 	=> 0
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
+	
 	function standard_add_hold_IEO_pairs()
 	{
 		$input_expected_output_pairs = array();
