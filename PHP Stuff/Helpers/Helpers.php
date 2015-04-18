@@ -93,7 +93,7 @@ function append_required_fields(&$arr,$tablename)
 	{
 		if(!array_key_exists('patron_id',$arr))
 			$arr['patron_id'] = 'NULL';
-		if(!array_key_exists('mediaitem_id)',$arr))
+		if(!array_key_exists('mediaitem_id',$arr))
 			$arr['mediaitem_id'] = 'NULL';
 		if(!array_key_exists('time_placed',$arr))
 			$arr['time_placed'] = 'NULL';

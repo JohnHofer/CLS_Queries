@@ -34,7 +34,7 @@ require_once "Testdata.php";
 //	
 // Queries.php
 	
-//	/*
+	/*
 	
 //	functionTestBlock(	standard_login_IEO_pairs(), 				'login');
 	// get_librarian_permissions
@@ -63,10 +63,10 @@ require_once "Testdata.php";
 	// add_contributor
 	// add_fine
 	// add_hardcopy
-	// add_hold
+	functionTestBlock(standard_add_hold_IEO_pairs(), 		'add_hold');
 	// add_itemtag
 	// add_librarian
-	functionTestBlock(standard_add_mediaitem_IEO_pairs(), 'add_mediaitem');
+//	functionTestBlock(standard_add_mediaitem_IEO_pairs(), 	'add_mediaitem');
 	// add_patron
 	// add_role
 	// add_tag

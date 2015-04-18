@@ -577,7 +577,59 @@
 		return $input_expected_output_pairs;
 	}
 	
-
+	function standard_add_hold_IEO_pairs()
+	{
+		$input_expected_output_pairs = array();
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 1,
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			() 
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(	
+			array
+			(	
+				array
+				(
+					'patron_id' 		=> 2,
+					'mediaitem_id' 		=> 1,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			()
+		);
+		$input_expected_output_pairs[] = generate_IEO_pair
+		(
+			array
+			(
+				array
+				(
+					'patron_id' 		=> 1,
+					'mediaitem_id' 		=> 0,
+					'time_placed' 		=> '2015-04-18',
+					'expiration_date' 	=> '2015-04-21'
+				)
+			), 
+			array
+			(
+				'error' 		=> 'Not found',
+				'error_code' 	=> 1
+			)
+		);
+		
+		return $input_expected_output_pairs;
+	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	

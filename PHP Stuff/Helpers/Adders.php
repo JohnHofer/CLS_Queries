@@ -8,12 +8,24 @@ function add_to_table($arr,$tablename)
 	global $mysqli;
 	
 	surround_in_quotes($arr);
+	
+//	echo "<pre>";
+//	print_r($arr);
+//	echo "</pre>";
+	
 	append_required_fields($arr, $tablename);
+	
+//	echo "<pre>";
+//	print_r($arr);
+//	echo "</pre>";
+	
 	$fields = array_keys($arr);
 	$vals = array_values($arr);
 	
 	$query = "INSERT INTO `$tablename`(`".implode("`, `", $fields)."`)
 		VALUES (".implode(", ", $vals).")";
+	
+//	echo "<p>$query</p>";
 	
 	$result = $mysqli->query($query);
 
