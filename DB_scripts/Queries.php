@@ -6,6 +6,7 @@ require_once "Helpers/Adders.php";
 require_once "Helpers/Getters.php";
 require_once "Helpers/Removers.php";
 require_once "Helpers/Library_Defaults.php";
+require_once "Helpers/Stoplist.php"
 
 function login($username, $password, $table)
 {
@@ -682,6 +683,8 @@ function add_item($arr)
 	
 	if($title != 'NULL')
 	{
+		$title = preg_replace($stoplist, "", $title);
+		$title = preg_replace("/[^0-9^a-zA-Z^\s]+/","",$title);
 		$potential_tags = preg_split("/[\s,]+/", $title);
 		
 		foreach($potential_tags as $tag_to_be)
@@ -826,6 +829,8 @@ function add_item($arr)
 				// add and link tags for these contributors.
 				if($first != 'NULL')
 				{
+					$first = preg_replace($stoplist, "", $first);
+					$first = preg_replace("/[^0-9^a-zA-Z^\s]+/","",$first);
 					$potential_tags = preg_split("/[\s,]+/", $first);
 					
 					foreach($potential_tags as $tag_to_be)
@@ -877,6 +882,8 @@ function add_item($arr)
 				}
 				if($last != 'NULL')
 				{
+					$last = preg_replace($stoplist, "", $last);
+					$last = preg_replace("/[^0-9^a-zA-Z^\s]+/","",$last);
 					$potential_tags = preg_split("/[\s,]+/", $last);
 					
 					foreach($potential_tags as $tag_to_be)
