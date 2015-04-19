@@ -469,7 +469,7 @@ function remove_hold($mediaitem_id, $patron_id)
 
 function add_item($arr)
 {	
-//	$debugging = true;
+	$debugging = true;
 
 	$report = array();
 	
@@ -512,6 +512,10 @@ function add_item($arr)
 	$checkout_duration 	= clean_exists_make_empty_if_not($arr, 'checkout_duration'); 
 	$renew_limit 		= clean_exists_make_empty_if_not($arr, 'renew_limit'); 
 	
+	if($issue_no == '')
+	{
+		$issue_no = 'NULL';
+	}
 	if($isbn == '')	// recentchange
 	{
 		$isbn == 'NULL';
@@ -579,6 +583,15 @@ function add_item($arr)
 		
 		$preexisting_mediaitem = get_mediaitem($mediaitem_description);
 		
+		if(isset($debugging))
+		{
+			echo "<pre>";
+			print_r($preexisting_mediaitem);
+			echo "</pre>";	
+		}
+	
+		$mediaitem_id = $preexisting_mediaitem[0]['id'];
+	
 		$report['mediaitem'] = 'added';
 	}
 	else
@@ -641,6 +654,13 @@ function add_item($arr)
 		'checkout_duration' => $checkout_duration,
 		'renew_limit' 		=> $renew_limit
 	);
+	
+	if(isset($debugging))
+	{
+		echo "<pre>";
+		print_r($hardcopy_description);
+		echo "</pre>";	
+	}
 
 	$add_hardcopy_result = add_hardcopy($hardcopy_description);
 		
