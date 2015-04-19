@@ -34,6 +34,5 @@ function search_all($str)
 	$results = get_hits($str,'language',$results);
 	$results = get_hits($str,'contributor',$results);
 	return array_keys($results);
-	return array_keys($results);
 }
 ?>
