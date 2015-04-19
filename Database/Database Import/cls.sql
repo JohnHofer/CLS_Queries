@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2015 at 02:24 AM
+-- Generation Time: Apr 19, 2015 at 08:58 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -33,17 +33,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(17) NOT NULL,
   `password_hash` varchar(20) NOT NULL,
   `salt` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `username`, `password_hash`, `salt`) VALUES
-(3, 'admin1', 'password', 1),
-(5, 'admin2', 'password', 1),
-(6, 'admin3', 'password', 1),
-(7, 'admin4', 'password', 3);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -83,7 +73,11 @@ CREATE TABLE IF NOT EXISTS `contribution` (
 
 INSERT INTO `contribution` (`mediaitem_id`, `contributor_id`, `role_id`) VALUES
 (1, 1, 1),
-(1, 1, 7);
+(1, 1, 7),
+(124, 1, 1),
+(1, 17, 7),
+(124, 17, 1),
+(124, 25, 16);
 
 -- --------------------------------------------------------
 
@@ -95,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `contributor` (
 `id` int(10) unsigned NOT NULL,
   `first` varchar(35) DEFAULT NULL,
   `last` varchar(35) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `contributor`
@@ -104,7 +98,8 @@ CREATE TABLE IF NOT EXISTS `contributor` (
 INSERT INTO `contributor` (`id`, `first`, `last`) VALUES
 (19, NULL, 'Bay'),
 (1, 'Jesus', 'Christ'),
-(17, 'Michael', 'Bay');
+(17, 'Michael', 'Bay'),
+(25, 'Santa', 'Claus');
 
 -- --------------------------------------------------------
 
@@ -142,7 +137,10 @@ CREATE TABLE IF NOT EXISTS `hardcopy` (
 --
 
 INSERT INTO `hardcopy` (`barcode`, `mediaitem_id`, `copy_no`, `call_no`, `status`, `checkout_duration`, `renew_limit`) VALUES
-(1, 1, 1, '', 'Lost', 0, 1);
+(1, 1, 1, '', 'Lost', 0, 1),
+(100000, 124, 1, '', 'Normal', 21, 1),
+(1000001, 124, 2, '', 'Normal', 21, 1),
+(1000002, 124, 3, '', 'Normal', 21, 1);
 
 -- --------------------------------------------------------
 
@@ -182,7 +180,16 @@ CREATE TABLE IF NOT EXISTS `itemtag` (
 INSERT INTO `itemtag` (`tag_id`, `mediaitem_id`) VALUES
 (1, 1),
 (2, 1),
-(7, 1);
+(38, 124),
+(39, 124),
+(40, 124),
+(41, 124),
+(42, 124),
+(43, 124),
+(44, 124),
+(45, 124),
+(46, 124),
+(47, 124);
 
 -- --------------------------------------------------------
 
@@ -231,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `mediaitem` (
   `edition` tinyint(3) unsigned DEFAULT NULL,
   `volume` int(10) unsigned DEFAULT NULL,
   `issue_no` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
 
 --
 -- Dumping data for table `mediaitem`
@@ -239,7 +246,8 @@ CREATE TABLE IF NOT EXISTS `mediaitem` (
 
 INSERT INTO `mediaitem` (`id`, `title`, `year`, `isbn`, `media_type`, `edition`, `volume`, `issue_no`) VALUES
 (1, 'The Book of Mormon', 1900, 0, 'Book', NULL, NULL, NULL),
-(75, 'The Hunger Games', 2010, 24234256, 'Book', NULL, NULL, NULL);
+(75, 'The Hunger Games', 2010, 24234256, 'Book', NULL, NULL, NULL),
+(124, 'Test', 100, 200, 'Book', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -276,7 +284,7 @@ INSERT INTO `patron` (`id`, `username`, `password_hash`, `salt`, `first`, `last`
 CREATE TABLE IF NOT EXISTS `role` (
 `id` int(10) unsigned NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `role`
@@ -284,7 +292,8 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 INSERT INTO `role` (`id`, `description`) VALUES
 (1, 'Author'),
-(7, 'Director');
+(7, 'Director'),
+(16, 'Producer');
 
 -- --------------------------------------------------------
 
@@ -295,17 +304,26 @@ INSERT INTO `role` (`id`, `description`) VALUES
 CREATE TABLE IF NOT EXISTS `tag` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(20) NOT NULL,
-  `type` enum('title','subject','genre','language') NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+  `type` enum('title','subject','genre','language','contributor') NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `tag`
 --
 
 INSERT INTO `tag` (`id`, `name`, `type`) VALUES
-(1, 'Religious', 'subject'),
+(42, 'Bay', 'contributor'),
+(40, 'Christ', 'contributor'),
+(44, 'Claus', 'contributor'),
+(39, 'Jesus', 'contributor'),
+(41, 'Michael', 'contributor'),
 (2, 'Mormon', 'subject'),
-(7, 'Stupid', 'subject');
+(47, 'Other', 'language'),
+(1, 'Religious', 'subject'),
+(46, 'Religious', 'genre'),
+(43, 'Santa', 'contributor'),
+(45, 'Stupid', 'genre'),
+(38, 'Test', 'title');
 
 --
 -- Indexes for dumped tables
@@ -387,7 +405,7 @@ ALTER TABLE `role`
 -- Indexes for table `tag`
 --
 ALTER TABLE `tag`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`,`type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -397,12 +415,12 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `contributor`
 --
 ALTER TABLE `contributor`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `librarian`
 --
@@ -412,7 +430,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `mediaitem`
 --
 ALTER TABLE `mediaitem`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=76;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=125;
 --
 -- AUTO_INCREMENT for table `patron`
 --
@@ -422,12 +440,12 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48;
 --
 -- Constraints for dumped tables
 --

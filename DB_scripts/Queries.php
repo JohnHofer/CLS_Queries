@@ -500,7 +500,11 @@ function add_item($arr)
 	$status 			= clean_exists_make_empty_if_not($arr, 'status');	
 	$checkout_duration 	= clean_exists_make_empty_if_not($arr, 'checkout_duration'); 
 	$renew_limit 		= clean_exists_make_empty_if_not($arr, 'renew_limit'); 
-		
+	
+	if($isbn == '')	// recentchange
+	{
+		$isbn == 'NULL';
+	}
 	if($status == '')
 	{
 		$status = 'Normal';
