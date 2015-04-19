@@ -119,7 +119,7 @@ function get_copy_info($barcode)
 					}
 				}
 			}
-	
+
 			return $pending_result;
 		}
 		else
@@ -144,7 +144,7 @@ function get_general_item_info($mediaitem_id)
 	if($error = check_sql_error($result))
 		return $error;
 	
-	$mediaitem = array();	
+	$mediaitem = array();
 
 	if($row = $result->fetch_assoc())
 	{
@@ -216,6 +216,14 @@ function get_general_item_info($mediaitem_id)
 	}
 	
 	$mediaitem['barcodes'] = $barcodes;
+	
+	$holds_query = "SELECT * FROM `hold` WHERE `mediaitem_id` = $mediaitem_id";
+	
+	$result = $mysqli->query($holds_query);
+	if($error = check_sql_error($result))
+		return $error;
+
+	$mediaitem['num_holds'] = $result->num_rows;
 	
 	return $mediaitem;
 }

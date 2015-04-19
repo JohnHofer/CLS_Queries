@@ -1,14 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset = "utf-8">
+		<title>Test File!</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+
 <?php
 
 require_once "../Queries.php";
 
 $new_item = array
 (
-	'id' 			=> 	1,
 	'title' 		=> 	'The Book of Mormon',
 	'year' 			=> 	1900,
 	'isbn' 			=> 	0,
 	'media_type'	=> 	'Book',
+	
 	'tags' => Array
 	(
 		0 => array
@@ -73,3 +83,5 @@ print_r($result);
 echo "</pre>";
 
 ?>
+	</body>
+</html>
