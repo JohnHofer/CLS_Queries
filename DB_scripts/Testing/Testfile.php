@@ -61,11 +61,10 @@ require_once "Testdata.php";
 	
 //	functionTestBlock(standard_add_admin_IEO_pairs(), 			'add_admin');
 	// add_checkedout
-	functionTestBlock(standard_add_contribution_IEO_pairs(),	'add_contribution');
+//	functionTestBlock(standard_add_contribution_IEO_pairs(),	'add_contribution');
 //	functionTestBlock(standard_add_contributor_IEO_pairs(), 	'add_contributor');
 	// add_fine
-	// add_hardcopy
-//////	functionTestBlock(standard_add_hardcopy_IEO_pairs(), 		'add_hardcopy');
+	functionTestBlock(standard_add_hardcopy_IEO_pairs(), 		'add_hardcopy');
 //	functionTestBlock(standard_add_hold_IEO_pairs(), 			'add_hold');
 //	functionTestBlock(standard_add_itemtag_IEO_pairs(), 		'add_itemtag');
 	// add_librarian
@@ -80,10 +79,16 @@ require_once "Testdata.php";
 //	
 // Getters.php
 
+//	/*
+
+//	functionTestBlock(standard_select_from_table_IEO_pairs(), 		'select_from_table');
+
+//	functionTestBlock(standard_get_mediaitem_IEO_pairs(), 			'get_mediaitem');
 	//	get_checkouts_by_patron_id
 	//	get_hardcopy_by_barcode
 	//	***get_patron_by_id
 	
+//	*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	
@@ -96,6 +101,16 @@ require_once "Testdata.php";
 	functionTestBlock(standard_delete_from_admin_IEO_pairs(), 'delete_from_admin');
 	
 //*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+// Helpers.php
+
+	/*
+
+//	functionTestBlock(standard_clean_exists_make_empty_if_not_IEO_pairs(), 			'clean_exists_make_empty_if_not');
+
+//	*/
 
 ?>
 		

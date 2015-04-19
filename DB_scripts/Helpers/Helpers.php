@@ -27,6 +27,84 @@ function surround_in_quotes(&$arr)
 	array_walk($arr, create_function('&$str', '$str = "\'$str\'";'));
 }
 
+function surround_in_ticks(&$arr)
+{
+	array_walk($arr, create_function('&$str', '$str = "`$str`";'));
+}
+
+function required_fields_for_hardcopy_exist(&$arr)
+{
+	if(array_key_exists('barcode', $arr))
+	{
+//		if(array_key_exists('checkout_duration', $arr))
+//		{
+//			if(array_key_exists('renew_limit', $arr))
+//			{
+				return true;
+//			}
+//		}
+	}
+	
+	return false;
+}
+function required_fields_for_mediaitem_exist(&$arr)
+{
+	if(array_key_exists('title', $arr))
+	{
+		if(array_key_exists('media_type', $arr))
+		{
+			if(array_key_exists('isbn', $arr))
+			{
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+function required_fields_for_tag_exist(&$arr)
+{
+	if(array_key_exists('name', $arr))
+	{
+		if(array_key_exists('type', $arr))
+		{
+//			if($arr['type'] != 'title' && $arr['type'] != 'subject' && $arr['type'] != 'genre' && $arr['type'] != 'language' && $arr['type'] != 'contributor')
+//			{
+//				return false;
+//			}
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function clean_exists_make_empty_if_not($arr, $key)
+{
+	if(array_key_exists($key, $arr))
+	{
+		clean_string($arr[$key]);
+		return $arr[$key];
+	}
+	else
+	{
+		return '';
+	}
+}
+
+function clean_exists_make_null_if_not($arr, $key)
+{
+	if(array_key_exists($key, $arr))
+	{
+		clean_string($arr[$key]);
+		return $arr[$key];
+	}
+	else
+	{
+		return 'NULL';
+	}
+}
 
 function append_required_fields(&$arr,$tablename)
 { 
