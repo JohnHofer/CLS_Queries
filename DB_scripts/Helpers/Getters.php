@@ -77,9 +77,19 @@ function select_from_table($arr,$tablename)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function get_contribution($where)
+{
+	return select_from_table($where, 'contribution');
+}
+
 function get_contributor($where)
 {
 	return select_from_table($where, 'contributor');
+}
+
+function get_itemtag($where)
+{
+	return select_from_table($where, 'itemtag');
 }
 
 function get_mediaitem($where)
@@ -96,6 +106,12 @@ function get_role($where)
 {
 	return select_from_table($where, 'role');
 }
+
+function get_tag($where)
+{
+	return select_from_table($where, 'tag');
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

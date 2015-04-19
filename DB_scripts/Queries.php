@@ -458,7 +458,7 @@ function remove_hold($mediaitem_id, $patron_id)
 
 function add_item($arr)
 {	
-	$debugging = true;
+//	$debugging = true;
 
 	$report = array();
 	
@@ -477,7 +477,7 @@ function add_item($arr)
 	}
 
 	// Destination : mediaitem
-	$title 				= clean_exists_make_empty_if_not($arr, 'title'); 
+	$title 				= clean_exists_make_null_if_not($arr, 'title'); 
 	$year 				= clean_exists_make_null_if_not($arr, 'year'); 
 	$media_type 		= clean_exists_make_empty_if_not($arr, 'media_type'); 
 	$isbn 				= clean_exists_make_null_if_not($arr, 'isbn'); 
@@ -645,6 +645,58 @@ function add_item($arr)
 	$report['hardcopy'] =	'added';
 	$report['barcode']	=	$barcode;	
 	
+	if($title != 'NULL')
+	{
+		$potential_tags = preg_split("/[\s,]+/", $title);
+		
+		foreach($potential_tags as $tag_to_be)
+		{
+			//ToDo : Get help with stoplisting things.
+			
+			$tag_description = array
+			(
+				'name' => $tag_to_be,
+				'type' => 'title'
+			);
+			
+			$preexisting_tag = get_tag($tag_description);
+			
+			if(array_key_exists('error', $preexisting_tag))	// The tag doesn't exist, so create and find it.
+			{
+				$add_tag_result = add_tag($tag_description);
+				
+				if(array_key_exists('error', $add_tag_result))
+				{
+					$report[] = "Failed to add $tag_description to tag.";
+					continue;
+				}
+				
+				$preexisting_tag = get_tag($tag_description);
+			}
+			
+			$itemtag_description = array
+			(
+				'tag_id' 		=> $preexisting_tag[0]['id'],
+				'mediaitem_id' 	=> $mediaitem_id
+			);
+			
+			$preexisting_itemtag = get_itemtag($itemtag_description);
+			
+			if(array_key_exists('error', $preexisting_itemtag))	// The tag doesn't exist, so create and find it.
+			{
+				$add_itemtag_result = add_itemtag($itemtag_description);
+				
+				if(array_key_exists('error', $add_itemtag_result))
+				{
+					$report[] = "Failed to add $itemtag_description to contributor.";
+					continue;
+				}
+				
+				$preexisting_itemtag = get_itemtag($itemtag_description);
+			}
+		}
+	}	
+	
 	if(isset($contributors))
 	{
 		//////////////////////////////////	
@@ -701,22 +753,11 @@ function add_item($arr)
 					
 					if(array_key_exists('error', $add_contributor_result))
 					{
-						$report[] = 'Failed to add $contributor_description to contributor.';
+						$report[] = "Failed to add $contributor_description to contributor.";
 						continue;
 					}
 					
 					$preexisting_contributor = get_contributor($contributor_description);
-				}
-				
-				// add and link tags for these contributors.
-				if($first != 'NULL')
-				{
-					$potential_tags = preg_split("/[\s,]+/", $first);
-					
-					foreach($potential_tags as $tag_to_be)
-					{
-						
-					}
 				}
 				
 				//add contribution
@@ -727,19 +768,128 @@ function add_item($arr)
 					'contributor_id'	 =>	$preexisting_contributor[0]['id']
 				);
 				
-				if(isset($debugging))
+				$preexisting_contribution = get_contribution($contribution_description);
+				
+				if(array_key_exists('error', $preexisting_contribution))
 				{
-					echo "<pre>";
-					print_r($contribution_description);
-					echo "</pre>";
+					if(isset($debugging))
+					{
+						echo "<pre>";
+						print_r($contribution_description);
+						echo "</pre>";
+					}
+					
+					$add_contribution_result = add_contribution($contribution_description);
+					
+					if(array_key_exists('error', $add_contribution_result))
+					{
+						$report[] = 'Failed to add $contribution_description to contribution.';
+						continue;
+					}
 				}
 				
-				$add_contribution_result = add_contribution($contribution_description);
-				
-				if(array_key_exists('error', $add_contribution_result))
+				// add and link tags for these contributors.
+				if($first != 'NULL')
 				{
-					$report[] = 'Failed to add $contribution_description to contribution.';
-					continue;
+					$potential_tags = preg_split("/[\s,]+/", $first);
+					
+					foreach($potential_tags as $tag_to_be)
+					{
+						//ToDo : Get help with stoplisting things.
+						
+						$tag_description = array
+						(
+							'name' => $tag_to_be,
+							'type' => 'contributor'
+						);
+						
+						$preexisting_tag = get_tag($tag_description);
+						
+						if(array_key_exists('error', $preexisting_tag))	// The tag doesn't exist, so create and find it.
+						{
+							$add_tag_result = add_tag($tag_description);
+							
+							if(array_key_exists('error', $add_tag_result))
+							{
+								$report[] = "Failed to add $tag_description to tag.";
+								continue;
+							}
+							
+							$preexisting_tag = get_tag($tag_description);
+						}
+						
+						$itemtag_description = array
+						(
+							'tag_id' 		=> $preexisting_tag[0]['id'],
+							'mediaitem_id' 	=> $mediaitem_id
+						);
+						
+						$preexisting_itemtag = get_itemtag($itemtag_description);
+						
+						if(array_key_exists('error', $preexisting_itemtag))	// The tag doesn't exist, so create and find it.
+						{
+							$add_itemtag_result = add_itemtag($itemtag_description);
+							
+							if(array_key_exists('error', $add_itemtag_result))
+							{
+								$report[] = "Failed to add $itemtag_description to itemtag.";
+								continue;
+							}
+							
+							$preexisting_itemtag = get_itemtag($itemtag_description);
+						}
+					}
+				}
+				if($last != 'NULL')
+				{
+					$potential_tags = preg_split("/[\s,]+/", $last);
+					
+					foreach($potential_tags as $tag_to_be)
+					{
+						//ToDo : Get help with stoplisting things.
+						
+						$tag_description = array
+						(
+							'name' => $tag_to_be,
+							'type' => 'contributor'
+						);
+						
+						$preexisting_tag = get_tag($tag_description);
+						
+						if(array_key_exists('error', $preexisting_tag))	// The tag doesn't exist, so create and find it.
+						{
+							$add_tag_result = add_tag($tag_description);
+							
+							if(array_key_exists('error', $add_tag_result))
+							{
+								$report[] = "Failed to add $tag_description to tag.";
+								continue;
+							}
+							
+							$preexisting_tag = get_tag($tag_description);
+						}
+						
+						$itemtag_description = array
+						(
+							'tag_id' 		=> $preexisting_tag[0]['id'],
+							'mediaitem_id' 	=> $mediaitem_id
+						);
+						
+						$preexisting_itemtag = get_itemtag($itemtag_description);
+						
+						if(array_key_exists('error', $preexisting_itemtag))	// The tag doesn't exist, so create and find it.
+						{
+							$add_itemtag_result = add_itemtag($itemtag_description);
+							
+							if(array_key_exists('error', $add_itemtag_result))
+							{
+								$report[] = "Failed to add $itemtag_description to itemtag.";
+								continue;
+							}
+							
+							$preexisting_itemtag = get_itemtag($itemtag_description);
+						}
+					}
 				}
 			}
 		}
@@ -749,54 +899,60 @@ function add_item($arr)
 	{
 		echo "<h2>Checkpoint #4, Created/Linked/Found all contributors, roles, and contributions</h2>";
 	}
-	/*
 	
-	//add tags
-	//TODO: Put in all the words from title as title tags
-	//TODO: Put in all words from author as author tags
-	foreach($tags as $name)
+	if(isset($tags))
 	{
-		//check if it already exists
-		$query = "SELECT `id` FROM `tag` WHERE `name` = $name";
-		$result = $mysqli->query($query);
-	
-		if($temp = check_sql_error($result))
-			return $temp;
-		
-		if($row = $result->fetch_assoc())
-			$tag_id = $row['id'];
-			
-		else
+		foreach($tags as $single_tag)
 		{
-			$type = "subject";
-			$arr = array(
-							'name'		 =>	$name, 
-							'type'	     =>	$type
-							
-					);
-			add_tag($arr);
+			if(!array_key_exists('name', $single_tag) || !array_key_exists('type', $single_tag))
+			{
+				$report[] = "Failed to add $single_tag to tag.";
+				continue;
+			}
 			
-			//get tag_id
-			$query = "SELECT `id` FROM `tag` WHERE `name` = $name AND `type` = $type";
-			$result = $mysqli->query($query);
-			
-			if($temp = check_sql_error($result))
-				return $temp;
-			
-			if($row = $result->fetch_assoc())
-				$tag_id = $row['id'];
-		}
-				
-	//add itemtag
-	$arr = array(
-					'tag_id'		 =>	$tag_id, 
-					'mediaitem_id'	 =>	$mediaitem_id
+			$tag_description = array
+			(
+				'name' => $single_tag['name'],
+				'type' => $single_tag['type']
 			);
-	add_itemtag($arr);
-		
-	}
-	
-	*/
+			
+			$preexisting_tag = get_tag($tag_description);
+			
+			if(array_key_exists('error', $preexisting_tag))	// The tag doesn't exist, so create and find it.
+			{
+				$add_tag_result = add_tag($tag_description);
+				
+				if(array_key_exists('error', $add_tag_result))
+				{
+					$report[] = "Failed to add $tag_description to tag.";
+					continue;
+				}
+				
+				$preexisting_tag = get_tag($tag_description);
+			}
+			
+			$itemtag_description = array
+			(
+				'tag_id' 		=> $preexisting_tag[0]['id'],
+				'mediaitem_id' 	=> $mediaitem_id
+			);
+			
+			$preexisting_itemtag = get_itemtag($itemtag_description);
+			
+			if(array_key_exists('error', $preexisting_itemtag))	// The tag doesn't exist, so create and find it.
+			{
+				$add_itemtag_result = add_itemtag($itemtag_description);
+				
+				if(array_key_exists('error', $add_itemtag_result))
+				{
+					$report[] = "Failed to add $itemtag_description to contributor.";
+					continue;
+				}
+				
+				$preexisting_itemtag = get_itemtag($itemtag_description);
+			}
+		}
+	}	
 	
 	return $report;
 }

@@ -26,4 +26,8 @@ $stoplist = array(
 		'/\bthan\b/i',
 		'/\bor\b/i'
 	);
+	
+$contributors_stoplist = array();
+
+
 ?>

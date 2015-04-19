@@ -607,7 +607,7 @@
 						'tag' => Array
 							(
 								0 => 'Stupid',
-								1 => 'Religous',
+								1 => 'Religious',
 								2 => 'Other'
 							),
 
@@ -669,7 +669,7 @@
 						'tag' => Array
 							(
 								0 => 'Stupid',
-								1 => 'Religous',
+								1 => 'Religious',
 								2 => 'Other'
 							),
 
@@ -731,7 +731,7 @@
 						'tag' => Array
 							(
 								0 => 'Stupid',
-								1 => 'Religous',
+								1 => 'Religious',
 								2 => 'Other'
 							),
 
@@ -791,7 +791,7 @@
 						'tag' => Array
 							(
 								0 => 'Stupid',
-								1 => 'Religous',
+								1 => 'Religious',
 								2 => 'Other'
 							),
 
@@ -873,9 +873,21 @@
 						'issue_no' 		=> 	'',
 						'tag' => Array
 							(
-								0 => 'Stupid',
-								1 => 'Religous',
-								2 => 'Other'
+								0 => array
+								(
+									'name' => 'Stupid',
+									'type' => 'genre'
+								),
+								1 => array
+								(
+									'name' => 'Religious',
+									'type' => 'genre'
+								),
+								2 => array
+								(
+									'name' => 'Other',
+									'type' => 'language'
+								)
 							),
 
 						'contributor' => Array
@@ -920,30 +932,157 @@
 					'barcode'	=> 	100000
 				)
 			);
-		/*$input_expected_output_pairs[] = generate_IEO_pair
+			
+			$input_expected_output_pairs[] = generate_IEO_pair
 			(	
+				
 				array
 				(
-					1
-				), 
+					array
+					(
+						'title' 		=> 	'Test',
+						'year' 			=> 	100,
+						'isbn' 			=> 	200,
+						'media_type'	=> 	'Book',
+						'edition' 		=> 	'',
+						'volume' 		=> 	'',
+						'issue_no' 		=> 	'',
+						'tag' => Array
+							(
+								0 => array
+								(
+									'name' => 'Stupid',
+									'type' => 'genre'
+								),
+								1 => array
+								(
+									'name' => 'Religious',
+									'type' => 'genre'
+								),
+								2 => array
+								(
+									'name' => 'Other',
+									'type' => 'language'
+								)
+							),
+
+						'contributor' => Array
+							(
+								'Author' => Array
+									(
+										0 => Array
+											(
+												'first'	=> 'Jesus',
+												'last' 	=> 'Christ'
+											),
+										1 => Array
+											(
+												'first'	=> 'Michael',
+												'last' 	=> 'Bay'
+											)
+
+									),
+								'Producer' => Array
+									(
+										0 => Array
+											(
+												'first' => 'Santa',
+												'last'  => 'Claus'
+											)
+									)
+							),
+						
+						'barcode' 			=> 1000001,
+						'copy_no' 			=> 1,
+						'call_no' 			=> '',
+						'status' 			=> 'Normal',
+						'checkout_duration' => 0,
+						'renew_limit' 		=> 1,
+					)
+				),
+				
 				array
 				(
-					
+					'mediaitem'	=>	'already exists',
+					'hardcopy'	=>	'added',
+					'barcode'	=> 	1000001
 				)
 			);
-		$input_expected_output_pairs[] = generate_IEO_pair
+			$input_expected_output_pairs[] = generate_IEO_pair
 			(	
+				
 				array
 				(
-					2
-				), 
+					array
+					(
+						'title' 		=> 	'Test',
+						'year' 			=> 	100,
+						'isbn' 			=> 	200,
+						'media_type'	=> 	'Book',
+						'edition' 		=> 	'',
+						'volume' 		=> 	'',
+						'issue_no' 		=> 	'',
+						'tag' => Array
+							(
+								0 => array
+								(
+									'name' => 'Stupid',
+									'type' => 'genre'
+								),
+								1 => array
+								(
+									'name' => 'Religious',
+									'type' => 'genre'
+								),
+								2 => array
+								(
+									'name' => 'Other',
+									'type' => 'language'
+								)
+							),
+
+						'contributor' => Array
+							(
+								'Author' => Array
+									(
+										0 => Array
+											(
+												'first'	=> 'Jesus',
+												'last' 	=> 'Christ'
+											),
+										1 => Array
+											(
+												'first'	=> 'Michael',
+												'last' 	=> 'Bay'
+											)
+
+									),
+								'Producer' => Array
+									(
+										0 => Array
+											(
+												'first' => 'Santa',
+												'last'  => 'Claus'
+											)
+									)
+							),
+						
+						'barcode' 			=> 1000002,
+						'copy_no' 			=> 1,
+						'call_no' 			=> '',
+						'status' 			=> 'Normal',
+						'checkout_duration' => 0,
+						'renew_limit' 		=> 1,
+					)
+				),
+				
 				array
 				(
-					'error' 	=> 'Not found',
-					'error_code'	=> 1
+					'mediaitem'	=>	'already exists',
+					'hardcopy'	=>	'added',
+					'barcode'	=> 	1000002
 				)
 			);
-		*/
 		return $input_expected_output_pairs;
 	}
 	

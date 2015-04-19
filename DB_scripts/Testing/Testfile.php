@@ -113,13 +113,5 @@ require_once "Testdata.php";
 //	*/
 
 ?>
-		
-<!--		<fieldset> 	<legend>	check_out()	</legend>
-			<p>Success Expected</p>
-			<pre><?php	//print_r(check_out(1, 1));	?></pre>
-			<p>Failure Expected</p>
-			<pre><?php	//print_r(check_out(0, 0));	?></pre>
-		</fieldset>
--->
 	</body>
 </html>
