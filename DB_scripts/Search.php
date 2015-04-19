@@ -28,7 +28,7 @@ function search_all($str)
 				$results[$id] = 1;
 		}
 		arsort($results);
-		return $results;
+		return array_keys($results);
 	}
 }
 ?>
