@@ -6,7 +6,7 @@ require_once "Helpers/Adders.php";
 require_once "Helpers/Getters.php";
 require_once "Helpers/Removers.php";
 require_once "Helpers/Library_Defaults.php";
-require_once "Helpers/Stoplist.php"
+require_once "Helpers/Stoplist.php";
 
 function login($username, $password, $table)
 {
