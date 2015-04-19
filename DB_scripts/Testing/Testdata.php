@@ -313,8 +313,9 @@
 					'barcodes'=> Array
 						(
 							'0' => 1
-						)
-
+						),
+						
+					'num_holds'			=> 1
 				)
 			);
 		$input_expected_output_pairs[] = generate_IEO_pair
@@ -403,6 +404,7 @@
 							'0' => 1
 						),
 					
+					'num_holds'			=> 1,
 					'barcode' 			=> 1,
 					'mediaitem_id' 		=> 1,
 					'copy_no' 			=> 1,
