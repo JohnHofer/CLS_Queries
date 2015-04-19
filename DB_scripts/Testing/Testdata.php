@@ -18,7 +18,7 @@
 				'name' => 'Religious',
 				'type' => 'Genre'
 			),
-			0 => array
+			2 => array
 			(
 				'name' => 'Mormon',
 				'type' => 'Subject'
