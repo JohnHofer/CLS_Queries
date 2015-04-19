@@ -40,7 +40,7 @@ $new_item = array
 		)
 	),
 
-	'contributors' => Array
+	'contributor' => Array
 	(
 		'Author' => Array
 		(
@@ -88,26 +88,27 @@ $new_item2 = array
 		)
 	),
 
-	'contributors' => Array
+	'contributor' => Array
 	(
 		'Author' => Array
 		(
 			0 => Array
 			(
-				'first'	=> 'J. K.',
-				'last' 	=> 'Rowling'
+				'first'	=> '',
+				'last' 	=> 'The Institute of Stuff'
 			)
 
 		)
 	),
 	
-	'barcode' 			=> 11111,
+	'barcode' 			=> 132231,
 	'call_no' 			=> 131415,
 	'renew_limit' 		=> 1
 );
 
 echo "<pre>";
-$result = add_item($new_item);
+//$result = add_item($new_item);
+$result = add_item($new_item2);
 print_r($result);
 echo "</pre>";
 

@@ -479,6 +479,8 @@ function add_item($arr)
 	global $default_checkout_duration;
 	global $default_item_renew_limit;
 	
+	global $stoplist;
+	
 	if(!required_fields_for_mediaitem_exist($arr) || !required_fields_for_hardcopy_exist($arr))
 	{
 		return array
@@ -698,7 +700,10 @@ function add_item($arr)
 		
 		foreach($potential_tags as $tag_to_be)
 		{
-			//ToDo : Get help with stoplisting things.
+			if($tag_to_be == '')
+			{
+				continue;
+			}
 			
 			$tag_description = array
 			(
@@ -838,6 +843,7 @@ function add_item($arr)
 				// add and link tags for these contributors.
 				if($first != 'NULL')
 				{
+	
 					$first = preg_replace($stoplist, "", $first);
 					$first = preg_replace("/[^0-9^a-zA-Z^\s]+/","",$first);
 					$potential_tags = preg_split("/[\s,]+/", $first);
@@ -845,6 +851,11 @@ function add_item($arr)
 					foreach($potential_tags as $tag_to_be)
 					{
 						//ToDo : Get help with stoplisting things.
+						
+						if($tag_to_be == '')
+						{
+							continue;
+						}
 						
 						$tag_description = array
 						(
@@ -897,7 +908,10 @@ function add_item($arr)
 					
 					foreach($potential_tags as $tag_to_be)
 					{
-						//ToDo : Get help with stoplisting things.
+						if($tag_to_be == '')
+						{
+							continue;
+						}
 						
 						$tag_description = array
 						(
