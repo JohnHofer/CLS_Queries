@@ -459,20 +459,24 @@ function add_item($arr)
 {	
 	global $mysqli;
 
-	$title = clean_string($arr['title']); //mediaitem
-	$year = clean_string($arr['year']); //mediaitem
-	$media_type = clean_string($arr['media_type']); //mediaitem
-	$isbn = clean_string($arr['isbn']); //mediaitem
-	$edition = clean_string($arr['edition']); //mediaitem
-	$volume = clean_string($arr['volume']); //mediaitem
-	$issue_no = clean_string($arr['issue_no']); //mediaitem
-	$barcode = clean_string($arr['barcode']); //mediaitem
-	$contributors = $arr['contributor']; //contributors array
-	$tags = $arr['tag'];//tag array
-	$call_no = clean_string($arr['call_no']); //hardcopy
-	$status = clean_string($arr['status']); //hardcopy
-	$checkout_duration = clean_string($arr['checkout_duration']); //hardcopy
-	$renew_limit = clean_string($arr['renew_limit']); //hardcopy
+	// Destination : mediaitem
+	$title 				= clean_string($arr['title']); 
+	$year 				= clean_string($arr['year']); 
+	$media_type 		= clean_string($arr['media_type']); 
+	$isbn 				= clean_string($arr['isbn']); 
+	$edition 			= clean_string($arr['edition']);
+	$volume 			= clean_string($arr['volume']);
+	$issue_no 			= clean_string($arr['issue_no']);
+	
+	$contributors 		= $arr['contributor']; //contributors array
+	
+	$tags 				= $arr['tag'];//tag array
+	// Destination : hardcopy
+	$barcode 			= clean_string($arr['barcode']);
+	$call_no 			= clean_string($arr['call_no']); 
+	$status 			= clean_string($arr['status']); //hardcopy
+	$checkout_duration 	= clean_string($arr['checkout_duration']); //hardcopy
+	$renew_limit 		= clean_string($arr['renew_limit']); //hardcopy
 		
 	$copy_number = 1; //if the media item doesn't exist
 		
@@ -484,11 +488,11 @@ function add_item($arr)
 		
 	if($item = $result->fetch_assoc())	//barcode already in hardcopy
 	{
-		return array('error'=>"Barcode $barcode is already in mediaItem", 'error_code'=>10);
+		return array('error'=>"Barcode $barcode is already in use", 'error_code'=>10);
 	}
 		
 	//Check for already existing media item 
-	$query = "SELECT `id` FROM `mediaitem` WHERE `title` = $title AND `year` = $year AND `media_type` = $media_type AND `edition` = $edition AND `volume` = $volume AND `issue_no` = $issue_no";
+	$query = "SELECT `id` FROM `mediaitem` WHERE `title` = \'$title\' AND `year` = $year AND `media_type` = \'$media_type\' AND `edition` = \'$edition\' AND `volume` = \'$volume\' AND `issue_no` = \'$issue_no\'";
 		
 	$result = $mysqli->query($query);
 		
