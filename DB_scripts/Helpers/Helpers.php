@@ -208,7 +208,7 @@ function is_possible_enum_val($val,$field)
 	return false;
 }
 
-function search_by_generic_tag_type($str,$tag_type)
+function get_hits($str,$tag_type)
 {
 	global $mysqli;
 	
@@ -236,8 +236,7 @@ function search_by_generic_tag_type($str,$tag_type)
 			else
 				$results[$id] = 1;
 		}
-		arsort($results);
-		return array_keys($results);
+		return arsort($results);
 	}
 }
 ?>
