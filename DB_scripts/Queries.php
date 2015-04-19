@@ -513,6 +513,15 @@ function add_item($arr)
 	$checkout_duration 	= clean_exists_make_empty_if_not($arr, 'checkout_duration'); 
 	$renew_limit 		= clean_exists_make_empty_if_not($arr, 'renew_limit'); 
 	
+	
+	if($edition == '')
+	{
+		$edition = 'NULL';
+	}
+	if($volume == '')
+	{
+		$volume = 'NULL';
+	}
 	if($issue_no == '')
 	{
 		$issue_no = 'NULL';
