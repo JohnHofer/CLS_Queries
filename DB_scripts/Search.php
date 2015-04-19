@@ -28,43 +28,12 @@ function search_by_contributor($str)
 
 function search_all($str)
 {
-	$subject = search_by_subject($str);
-	$title = search_by_title($str);
-	$genre = search_by_genre($str);
-	$language = search_by_language($str);
-	$contributor = search_by_contributor($str);
-	$results = array();
-	foreach($subject as $id=>$count)
-		if(array_key_exists($id,$results))
-			$results[$id]+=$count;
-		else
-			$results[$id] = $count;
-	}
-	foreach($title as $id=>$count)
-		if(array_key_exists($id,$results))
-			$results[$id]+=$count;
-		else
-			$results[$id] = $count;
-	}
-	foreach($genre as $id=>$count)
-		if(array_key_exists($id,$results))
-			$results[$id]+=$count;
-		else
-			$results[$id] = $count;
-	}
-	foreach($language as $id=>$count)
-		if(array_key_exists($id,$results))
-			$results[$id]+=$count;
-		else
-			$results[$id] = $count;
-	}
-	foreach($contributor as $id=>$count)
-		if(array_key_exists($id,$results))
-			$results[$id]+=$count;
-		else
-			$results[$id] = $count;
-	}
-	arsort($results);
+	$results = get_hits($str,'subject');
+	$results = get_hits($str,'title',$results);
+	$results = get_hits($str,'genre',$results);
+	$results = get_hits($str,'language',$results);
+	$results = get_hits($str,'contributor',$results);
+	return array_keys($results);
 	return array_keys($results);
 }
 ?>

@@ -208,7 +208,7 @@ function is_possible_enum_val($val,$field)
 	return false;
 }
 
-function get_hits($str,$tag_type)
+function get_hits($str,$tag_type,$results = array())
 {
 	global $mysqli;
 	
@@ -219,7 +219,6 @@ function get_hits($str,$tag_type)
 	$words = $str.explode(" ",$str);
 	
 	//Build results array
-	$results = array();
 	foreach($words as $word)
 	{
 		$query_result = $mysqli->query("SELECT mediaitem_id FROM itemtag
