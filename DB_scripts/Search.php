@@ -1,5 +1,5 @@
 <?php
-require_once 'Helpers/Helpers.php'
+require_once "Helpers/Helpers.php";
 
 function search_by_subject($str)
 {
